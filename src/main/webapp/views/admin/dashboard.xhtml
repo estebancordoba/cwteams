@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/views/templates/admin/templateAdmin.xhtml">
+                
+    <ui:define name="content">            	
+              <h:form id="formCollaborative">
+               						
+					<p:dataTable id="tbl" value="#{collaborativeBean.obtenerCollaboratives(false)}" var="s" emptyMessage="No hay grupos formados"									
+							 rows="10" paginator="true" paginatorPosition="bottom"
+							 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							 rowsPerPageTemplate="5,10,15">
+							 
+				    <p:column headerText="Nombre" filterBy="#{s.name}" filterMatchMode="contains">
+				        <h:outputText value="#{s.name}" />
+				    </p:column>	
+				    
+				    <p:column headerText="Descripcion" filterBy="#{s.description}" filterMatchMode="contains">
+				        <h:outputText value="#{s.description}" />
+				    </p:column>	
+				    
+				    <p:column headerText="Dueño" style="text-align:center;" filterBy="#{s.userOwner}" filterMatchMode="exact">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('tblE').filter()">
+								<f:selectItem itemLabel="Elegir" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{usersBean.usuarios}" var="rl" itemLabel="#{rl.name}" />
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{s.userOwner.name}" />
+					</p:column>	 
+				    
+				</p:dataTable>
+				
+               </h:form>			
+	</ui:define>
+</ui:composition>

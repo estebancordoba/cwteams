@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/views/templates/admin/templateAdmin.xhtml">
+    
+     <ui:define name="breadcrumb">
+    	<li>Copias de Seguridad</li>
+    </ui:define>
+                
+    <ui:define name="content">              	
+    			<p:growl id="growl" sticky="true" showDetail="true" showSummary="true" autoUpdate="true" life="3000" escape="false" />
+    			
+    			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				    <p:graphicImage name="images/ajaxloadingbar.gif" />
+				</p:dialog>
+
+				<p:panel id="pnl" header="Copias de Seguridad">
+									
+					<p:commandButton value="Nueva Copia de Seguridad" icon="ui ui-icon-add" update=":formBackup" oncomplete="PF('dlgBackup').show()"/>
+					<p:commandButton value="Subir Copia de Seguridad" update=":dialogBK" icon="ui ui-icon-attach-file" oncomplete="PF('dlgSubmitBK').show()"/>			
+					
+					<br/><br/>
+					
+					<h:form id="formBackups">
+						<p:dataTable id="tbl" value="#{backupBean.backupFiles}" var="bk" emptyMessage="Sin registros"
+							widgetVar="backupsTable"
+							rows="10" paginator="true" paginatorPosition="bottom" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						 	rowsPerPageTemplate="5,10,15">
+			
+							<f:facet name="header">Copias de Seguridad Realizadas</f:facet>
+										
+							<p:column headerText="Nombre del archivo" style="text-align:center;" sortBy="#{bk.name}" filterBy="#{bk.name}" filterMatchMode="contains">
+								<h:outputText value="#{bk.name}" />
+							</p:column>
+			
+							<p:column headerText="Fecha - Hora" style="text-align:center;" sortBy="#{bk.date_hour}" filterBy="#{bk.date_hour}" filterMatchMode="contains">
+								<h:outputText value="#{bk.date_hour}" />
+							</p:column>
+							
+							<p:column headerText="Tamaño" sortBy="#{bk.size}" style="text-align:center;">
+								<h:outputText value="#{bk.size}" />
+							</p:column>
+							
+							<p:column style="width:20%;text-align: center">
+														    					            					            
+					            <p:commandButton update=":formRestore" oncomplete="PF('dlgRestore').show();" icon="ui-icon-import-export" title="Restaurar">
+					            	<f:setPropertyActionListener value="#{bk}" target="#{backupBean.backupFile}" />
+					            </p:commandButton>					        
+					            
+					            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload()" icon="ui-icon-file-download" title="Descargar" >
+		                            <p:fileDownload value="#{backupBean.download(bk.name)}" />
+		                        </p:commandButton>
+					            
+					            <p:commandButton update=":formEliminar" oncomplete="PF('dlgEliminar').show();" icon="ui-icon-trash" title="Eliminar">
+		                            <f:setPropertyActionListener value="#{bk}" target="#{backupBean.backupFile}" />
+		                        </p:commandButton>
+					        </p:column>	
+			
+						</p:dataTable>		    
+					</h:form>
+					
+					<h:form id="formBackup">
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="Realizar Copia de Seguridad" widgetVar="dlgBackup" resizable="false" focus="cbCancel" 
+		                          onHide="PF('dlgBackup').content.empty()">
+		                          		                    
+		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">                        
+		                        <h:outputText value="Se realizará una copia de seguridad de la Base de Datos a la fecha" />
+		                    </h:panelGrid>
+		                    <p:separator/>
+		                    <h:panelGroup style="display:block; text-align:center">
+		                        <p:commandButton style="margin-right: 5px" value="Aceptar" update=":formBackups:tbl" action="#{backupBean.backup}" 
+		                                         oncomplete="PF('dlgBackup').hide();PF('backupsTable').filter();" icon="ui-icon-check" 
+		                                         onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="Cancelar" oncomplete="PF('dlgBackup').hide();" icon="ui-icon-close"/>
+		                    </h:panelGroup>
+		                </p:dialog>
+		            </h:form>        
+		            
+		            <h:form id="formRestore">
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="Restaurar Copia de Seguridad" widgetVar="dlgRestore" resizable="false" focus="cbCancel" 
+		                          onHide="PF('dlgResore').content.empty()">		                    
+		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">
+		                        <h:outputText value="¿Está seguro que desea restaurar la copia de seguridad&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" 
+		                                      escape="false" />
+		                    </h:panelGrid>
+		                    <p:separator/>
+		                    <h:panelGroup style="display:block; text-align:center">
+		                        <p:commandButton style="margin-right: 5px" value="Aceptar" action="#{backupBean.restore}" 
+		                                         oncomplete="PF('dlgRestore').hide();" icon="ui-icon-check" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="Cancelar" oncomplete="PF('dlgRestore').hide();" icon="ui-icon-close"/>
+		                    </h:panelGroup>
+		                </p:dialog>
+		            </h:form>
+		            
+		            <h:form id="formEliminar">
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="Eliminar Archivo de Copia de Seguridad..." widgetVar="dlgEliminar" resizable="false" 
+		                          focus="cbCancel" onHide="PF('dlgEliminar').content.empty()">
+		                    <p:growl id="growlEliminar" showSummary="true" showDetail="true" life="2000"/>		                    
+		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">                        
+		                        <h:outputText value="¿Está seguro que desea eliminar la copia de seguridad&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" escape="false" />
+		                    </h:panelGrid>
+		                    <p:separator/>
+		                    <h:panelGroup style="display:block; text-align:center">
+		                        <p:commandButton style="margin-right: 5px" value="Aceptar" update=":formBackups:tbl,growlEliminar" action="#{backupBean.delete()}" 
+		                                         oncomplete="PF('dlgEliminar').hide();PF('backupsTable').filter();" icon="ui-icon-check" />
+		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="Cancelar" oncomplete="PF('dlgEliminar').hide();" icon="ui-icon-close"/>
+		                    </h:panelGroup>
+		                </p:dialog>
+		            </h:form>
+					
+				</p:panel>	
+				
+				<p:dialog widgetVar="dlgSubmitBK" onHide="PF('dlgSubmitBK').content.empty()" closeOnEscape="true" id="dialogBK" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="Subir Backup desde archivo SQL">							
+						<p:ajax event="close" resetValues="true" />
+						<h:form enctype="multipart/form-data">
+							<p:fileUpload id="fileBK" fileUploadListener="#{backupBean.submitBK}" mode="advanced" dragDropSupport="true"
+          							sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(sql)$/" 
+          							cancelLabel="Cancelar" invalidFileMessage="Tipo de archivo invalido" invalidSizeMessage="Tamaño invalido"
+          							fileLimitMessage="Limite de archivos alcanzado" required="true" requiredMessage="Aun no ha seleccionado ningun archivo"
+          							uploadLabel="Subir" label="Elegir" update="fileBK,growl" accept=".sql" oncomplete="PF('dlgSubmitBK').hide(),PF('statusDialog').hide()" 
+          							onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>          								           						
+						</h:form>		
+				</p:dialog>            	
+    </ui:define>
+</ui:composition>

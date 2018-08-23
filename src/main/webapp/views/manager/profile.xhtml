@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/views/templates/manager/templateManager.xhtml">
+     
+    <ui:define name="breadcrumb">
+        <li>Perfil</li>        
+    </ui:define>  
+                
+    <ui:define name="content">
+    	<p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" life="6000" escape="false" />
+     
+    	<h:form><p:remoteCommand name="prepararA" autoRun="true" update=":formUser" actionListener="#{usersBean.firstUser()}"/></h:form>
+    
+    	<h:form id="formUser">             	
+    	<div class="ui-g ui-fluid">
+    	
+            <div class="ui-g-12 ui-lg-6">                
+                <div class="card card-w-title">
+                <p:outputPanel  id="divD">
+                	<h2>Datos de Usuario</h2>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
+                    	<h:outputText style="font-weight: bold;" value="Usuario:" />
+                        <h:outputText value="#{usersBean.obtenerUsuario().user}" />
+                        
+                        <h:outputText style="font-weight: bold;" value="Rol:" />
+                        <h:outputText value="#{usersBean.obtenerUsuario().userType.rol}" />
+                    </p:panelGrid>
+                    <hr/>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
+                    	<h:outputText style="font-weight: bold;" value="Nombre:" />
+                        <h:outputText value="#{usersBean.obtenerUsuario().name}" />
+                        
+                        <h:outputText style="font-weight: bold;" value="Apellido:" />
+                        <h:outputText value="#{usersBean.obtenerUsuario().surname}" />
+                        
+                        <h:outputText style="font-weight: bold;" value="Telefono:" />
+                        <h:outputText value="#{usersBean.obtenerUsuario().phone}" />
+                        
+                        <h:outputText style="font-weight: bold;" value="Correo:" />
+                        <h:outputText value="#{usersBean.obtenerUsuario().email}" />
+                    </p:panelGrid>
+                    </p:outputPanel>
+                </div>     
+            </div>
+            
+            <div class="ui-g-12 ui-lg-6">                
+                <div class="card card-w-title">
+                    <h2>Editar</h2>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+	                    <p:commandButton actionListener="#{usersBean.actualizar(usersBean.obtenerUsuario().idUser)}" update=":formUser" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-pencil" value="Editar" title="Editar"/>					                
+						<p:commandButton actionListener="#{usersBean.cambiarC(usersBean.obtenerUsuario().idUser)}" update=":formUser" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-autorenew" value="Cambiar Contraseña" title="Cambiar Contraseña"/>
+					</p:panelGrid>	
+            	</div>  
+        	</div>
+   		</div>
+   		
+   						<p:dialog widgetVar="dlgAgregar" onHide="PF('dlgAgregar').content.empty()" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+							<p:ajax event="close" update=":formUser:dialogA" listener="#{usersBean.cancelar()}" />
+							<h:form>
+							<p:tabView id="tabA">								
+	        					<p:tab title="Datos de Usuario" rendered="#{usersBean.mDatos}">							
+						            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+											                                	
+	                                	<h:panelGroup styleClass="md-inputfield">
+	                                    	<p:inputText id="uUser" value="#{usersBean.user.user}" required="true" requiredMessage="Ingrese un nombre" validator="#{usersBean.userExists}"/>	                                    		
+	                                    	<label>Usuario</label>
+	                                    	<p:message for="uUser" />
+	                                	</h:panelGroup>
+						
+										<h:panelGroup styleClass="md-inputfield">
+	                                    	<p:inputText value="#{usersBean.user.name}"/>
+	                                    	<label>Nombre</label>
+	                                	</h:panelGroup>
+	                                	
+	                                	<h:panelGroup styleClass="md-inputfield">
+	                                    	<p:inputText value="#{usersBean.user.surname}"/>
+	                                    	<label>Apellido</label>
+	                                	</h:panelGroup>	
+	                                	
+	                                	<h:panelGroup styleClass="md-inputfield">
+	                                    	<p:inputText value="#{usersBean.user.phone}"/>
+	                                    	<label>Telefono</label>
+	                                	</h:panelGroup>	
+	                                	
+	                                	<h:panelGroup styleClass="md-inputfield">
+	                                    	<p:inputText id="uEmail" value="#{usersBean.user.email}" required="true" requiredMessage="Ingrese el correo" validator="#{usersBean.emailValidate}"/>
+	                                    	<label>Correo</label>
+	                                    	<p:message for="uEmail" /> 
+	                                	</h:panelGroup>
+						
+									</p:panelGrid>
+								</p:tab>
+								
+								<p:tab title="Contraseña" rendered="#{usersBean.mPass}">
+									<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">										
+										<h:panelGroup styleClass="md-inputfield">											
+	                                    	<p:password id="pass1" value="#{usersBean.user.pass}" match="pass2" feedback="true" redisplay="true"
+											strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil"
+											label="Ingresa una contraseña" promptLabel="Por favor ingrese una contraseña"
+											required="true" requiredMessage="Ingrese una contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+											<p:message for="pass1" />
+											<label>Contraseña</label>	                                    	
+	                                	</h:panelGroup>
+	                                	
+	                                	<h:panelGroup styleClass="md-inputfield">											
+											<p:password id="pass2" value="#{usersBean.user.pass}" feedback="true" redisplay="true"
+												strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil" 
+												promptLabel="Por favor ingrese una contraseña"
+												required="true" requiredMessage="Ingrese nuevamente la contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+											<p:message for="pass2" />                               
+											<label>Repetir Contraseña</label>     	
+	                                	</h:panelGroup>
+	                                							
+									</p:panelGrid>
+	        					</p:tab>
+							</p:tabView>							
+									            
+				            <p:separator/>
+				            <p:commandButton value="Guardar" update="tabA,:formUser:divD" actionListener="#{usersBean.guardarProfile()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgAgregar').hide();}else{PF('dlgAgregar').jq.effect('shake', {times:5}, 100);}"/>					                
+				            <p:commandButton value="Cancelar" update="tabA" actionListener="#{usersBean.cancelar()}" icon="ui ui-icon-cancel" oncomplete="PF('dlgAgregar').hide()" immediate="true"/>						        
+						    </h:form>
+					    </p:dialog>   		
+        </h:form>        	
+    </ui:define>
+</ui:composition>

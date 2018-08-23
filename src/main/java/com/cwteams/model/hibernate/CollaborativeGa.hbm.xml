@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 11/02/2018 11:58:03 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="cwteams" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.cwteams.model.hibernate.CollaborativeGa" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="collaborative_ga" lazy="false">
+        <id name="idCollaborativeGa" type="java.lang.Integer">
+            <column name="id_collaborative_ga"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="name"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="200" name="description"/>
+        </property>
+        <property generated="never" lazy="false" name="free" optimistic-lock="true" type="boolean" unique="false">
+            <column name="free" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="numMembersxGroup" optimistic-lock="true" type="int" unique="false">
+            <column name="numMembersxGroup" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="numIndividuals" optimistic-lock="true" type="int" unique="false">
+            <column name="numIndividuals" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="numCaracteristicas" optimistic-lock="true" type="int" unique="false">
+            <column name="numCaracteristicas" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="numGeneraciones" optimistic-lock="true" type="int" unique="false">
+            <column name="numGeneraciones" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="mediaAptitud" optimistic-lock="true" type="double" unique="false">
+            <column name="mediaAptitud" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="porcentajeSeleccion" optimistic-lock="true" type="double" unique="false">
+            <column name="porcentajeSeleccion" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="probabilidadMutarInd" optimistic-lock="true" type="double" unique="false">
+            <column name="probabilidadMutarInd" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="probabilidadMutarGen" optimistic-lock="true" type="double" unique="false">
+            <column name="probabilidadMutarGen" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="tiempoGeneracion" optimistic-lock="true" type="double" unique="false">
+            <column name="tiempoGeneracion" not-null="true" precision="22" scale="0"/>
+        </property>
+        <many-to-one name="userOwner" class="com.cwteams.model.hibernate.Users" fetch="select">
+            <column name="user_owner" not-null="true" />
+        </many-to-one> 
+    </class>
+</hibernate-mapping>

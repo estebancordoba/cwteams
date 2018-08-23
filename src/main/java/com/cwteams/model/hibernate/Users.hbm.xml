@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2/08/2017 02:45:18 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="cwteams" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.cwteams.model.hibernate.Users" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="users" lazy="false">
+        <id name="idUser" type="java.lang.Integer">
+            <column name="id_user"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="user" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="user" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="pass" optimistic-lock="true" type="string" unique="false">
+            <column length="200" name="pass" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="name"/>
+        </property>
+        <property generated="never" lazy="false" name="surname" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="surname"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="email"/>
+        </property>
+        <property generated="never" lazy="false" name="phone" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="phone"/>
+        </property>
+        <property generated="never" lazy="false" name="first" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="first"/>
+        </property>
+        <many-to-one name="userType" class="com.cwteams.model.hibernate.UsersType" fetch="select">
+            <column name="user_type" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 11/02/2018 09:05:45 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="cwteams" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.cwteams.model.hibernate.CharacteristicsGa" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="characteristics_ga"  lazy="false">
+        <id name="idCharacteristicsGa" type="java.lang.Integer">
+            <column name="id_characteristics_ga"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="value" optimistic-lock="true" type="double" unique="false">
+            <column name="value" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
+            <column length="200" name="name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="minimum" optimistic-lock="true" type="java.lang.Double" unique="false">
+            <column name="minimum" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="maximum" optimistic-lock="true" type="java.lang.Double" unique="false">
+            <column name="maximum" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="idMembersGa" optimistic-lock="true" type="int" unique="false">
+            <column name="id_members_ga" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

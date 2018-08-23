@@ -1,0 +1,313 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/views/templates/admin/templateAdmin.xhtml">
+    
+    <ui:define name="breadcrumb">
+    	<li>Trabajo Colaborativo</li>
+        <li>/</li>
+    	<li><p:link outcome="formGroups">Conformar Grupos</p:link></li>        
+    </ui:define>
+                
+    <ui:define name="content">           	
+        <p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" life="6000" escape="false" />
+	                               
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		    <p:graphicImage name="images/ajaxloadingbar.gif" />
+		</p:dialog> 
+		                            
+		<p:panel id="pnl" header="Grupos Conformados">
+			<p:commandButton value="Conformar nuevo grupo" update=":formParametros" actionListener="#{collaborativeBean.prepararDatos()}" oncomplete="PF('dlgWizard').show()" icon="ui-icon-all-out" title="Conformación de Grupos" onsuccess="PF('wizardPar').loadStep('submitdata', true);" />
+			<br/><br/>
+			
+			<h:form><p:remoteCommand name="prepararA" autoRun="true" update=":formFormGroup" actionListener="#{collaborativeBean.firstCollaborative()}"/></h:form>
+			
+			<h:form>
+				<pe:remoteCommand name="changeActived" process="@this" update=":formFormGroup:tbl" actionListener="#{collaborativeBean.changeActivatedCollaborative}">
+					<pe:methodSignature parameters="java.lang.Integer"/>
+					<pe:methodParam name="id_collaborative"/>    
+				</pe:remoteCommand>						
+			</h:form>
+			
+			<h:form id="formFormGroup">
+				<p:dataTable id="tbl" value="#{collaborativeBean.obtenerCollaboratives(false)}" var="s" emptyMessage="No hay grupos formados"									
+							 rows="10" paginator="true" paginatorPosition="bottom"
+							 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							 rowsPerPageTemplate="5,10,15"
+							 rowKey="#{s.idCollaborativeGa}" selection="#{collaborativeBean.selectCollaborative}">
+							 
+					<p:column selectionMode="multiple" style="width:16px;text-align:center"/>							 
+							 
+				    <p:column headerText="Nombre" filterBy="#{s.name}" filterMatchMode="contains">
+				        <h:outputText value="#{s.name}" />
+				    </p:column>	
+				    
+				    <p:column headerText="Descripcion" filterBy="#{s.description}" filterMatchMode="contains">
+				        <h:outputText value="#{s.description}" />
+				    </p:column>	
+				    
+				    <p:column id="sActivated" headerText="Activa">						    	
+				        <p:inputSwitch onchange="changeActived(#{s.idCollaborativeGa})" value="#{s.free}"  />						        
+				    </p:column>
+				 
+				    <p:column headerText="Dueño" style="text-align:center;" filterBy="#{s.userOwner}" filterMatchMode="exact">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('tblE').filter()">
+								<f:selectItem itemLabel="Elegir" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{usersBean.usuarios}" var="rl" itemLabel="#{rl.name}" />
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{s.userOwner.name}" />
+					</p:column>				 
+				    
+				    <p:column style="width:20%;text-align: center">				    				                
+					    <p:commandButton actionListener="#{collaborativeBean.colocarCollaborative(s)}" action="/views/admin/formedGroups.xhtml" icon="ui-icon-view-carousel" title="Visualizar Grupos"/>
+					    
+					    <p:commandButton actionListener="#{collaborativeBean.colocarCollaborative(s)}" action="#{collaborativeBean.colocarCollaborative(s)}" update=":formFormGroup" oncomplete="PF('dlgActualizar').show()"  icon="ui-icon-pencil" title="Editar"/>
+					    
+					    <p:commandButton update=":formFormGroup:tbl" actionListener="#{collaborativeBean.eliminar(s.idCollaborativeGa)}" icon="ui-icon-trash" title="Eliminar">
+			            	<p:confirm header="Confirmación" message="Desea eliminar el registro?" icon="ui-icon-alert" />
+			            </p:commandButton>  
+			        </p:column>					 
+				    
+				</p:dataTable>
+				
+				<br/>
+				<p:commandButton update=":formFormGroup:tbl" icon="ui-icon-playlist-add-check" value="Eliminar elementos seleccionados" actionListener="#{collaborativeBean.eliminarCollaboratives()}">
+					<p:confirm header="Confirmación" message="Desea eliminar los registros?" icon="ui-icon-alert" />
+				</p:commandButton>
+				
+				<p:dialog widgetVar="dlgActualizar" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+					<p:ajax event="close" update=":formFormGroup:dialogA" listener="#{collaborativeBean.prepararDatos()}"/>
+					<h:form>											
+		            	<p:panelGrid columns="2" id="panelA" layout="grid" styleClass="ui-panelgrid-blank form-group">
+							<h:panelGroup styleClass="md-inputfield">
+	                          	<p:inputText id="sNameA" value="#{collaborativeBean.collaborativeActual.name}" required="true" requiredMessage="Ingrese el nombre"/>
+	                          	<label>Nombre</label>
+	                          	<p:message for="sNameA" />
+	                      	</h:panelGroup>
+	                      	
+	                      	<h:panelGroup styleClass="md-inputfield">
+	                          	<p:inputTextarea scrollHeight="" rows="3" autoResize="false" value="#{collaborativeBean.collaborativeActual.description}"
+	                          	counter="displayA" maxlength="100" counterTemplate="{0}"/>
+	                          	<label>Descripcion</label>
+	                          	<h:outputText id="displayA" />
+	                          	
+	                      	</h:panelGroup>
+	                   	</p:panelGrid>						            
+			            <p:separator/>
+			            <p:commandButton value="Guardar" update="panelA,:formFormGroup:tbl" actionListener="#{collaborativeBean.actualizar()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgActualizar').hide();}else{PF('dlgActualizar').jq.effect('shake', {times:5}, 100);}"/>					                
+		        	    <p:commandButton value="Cancelar" update="panelA" actionListener="#{collaborativeBean.prepararDatos()}" icon="ui ui-icon-cancel" oncomplete="PF('dlgActualizar').hide()" immediate="true"/>						        
+				    </h:form>
+	    		</p:dialog>	
+							
+			</h:form>
+			
+			<p:dialog closeOnEscape="true" header="Conformación de Grupos" id="dlgWizard" widgetVar="dlgWizard" modal="true" showEffect="fade" hideEffect="fade" responsive="true" width="60%" >
+				<p:ajax event="close" update=":formParametros" resetValues=""/>
+				<h:form id="formParametros" enctype="multipart/form-data">
+					<p:wizard id="wizardPar" widgetVar="wizardPar" flowListener="#{collaborativeBean.onFlowProcess}" nextLabel="Siguiente" backLabel="Anterior" >
+						<p:tab id="submitdata" title="Subir Archivo">
+				        	<p:panelGrid columns="1" layout="grid" styleClass="form-group">	  		                                		                               		
+				                <p:fileUpload id="fileCW" fileUploadListener="#{collaborativeBean.submitData}" mode="advanced" dragDropSupport="true"
+          							sizeLimit="100000" fileLimit="1" 
+          							cancelLabel="Cancelar" invalidFileMessage="Tipo de archivo invalido" invalidSizeMessage="Tamaño invalido"
+          							fileLimitMessage="Limite de archivos alcanzado" required="true" requiredMessage="Aun no ha seleccionado ningun archivo"
+          							uploadLabel="Subir" label="Elegir" update="fileCW,growl"/>
+				            </p:panelGrid>
+				        					            
+				        </p:tab>
+				        <p:tab id="members" title="Miembros">
+				        	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+   								<h:panelGroup styleClass="md-inputfield">
+                                	<p:inputText id="sName" value="#{collaborativeBean.collaborativeActual.name}" required="true" requiredMessage="Ingrese el nombre"/>
+                                	<label>Nombre</label>
+                                	<p:message for="sName" />
+                            	</h:panelGroup>
+                            	
+                            	<h:panelGroup styleClass="md-inputfield">
+                                	<p:inputTextarea scrollHeight="" rows="3" autoResize="false" value="#{collaborativeBean.collaborativeActual.description}"
+                                	counter="display" maxlength="100" counterTemplate="{0}"/>
+                                	<label>Descripcion</label>
+                                	<h:outputText id="display" />
+                                	
+                            	</h:panelGroup>
+                           	</p:panelGrid>
+				        
+				        	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">       								
+				        		<p:selectOneMenu id="owner" value="#{collaborativeBean.collaborativeActual.userOwner}" converter="#{ownerConverter}" placeholder="Dueño"
+                                  					required="true" requiredMessage="Seleccione el dueño">
+                                  		<f:selectItem itemLabel="Dueño" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />					                														
+									<f:selectItems value="#{usersBean.usuarios}" var="u" itemLabel="#{u.name}" itemValue="#{u}"/>
+								</p:selectOneMenu>
+								
+								<h:panelGroup styleClass="md-inputfield">
+                                	<p:inputText disabled="true" widgetVar="sNumM" id="sNumM" value="#{collaborativeBean.selectedMemberData.size()}"/>
+                                	<label>Total Miembros</label>
+                                	<p:message for="sNumM" />
+                            	</h:panelGroup>
+                                	
+	                    	</p:panelGrid>				        	
+				        
+				        	<p:panelGrid columns="1" layout="grid" styleClass="form-group">	  		                                		                               		
+				               
+		    					<p:dataTable id="tblUsers" value="#{collaborativeBean.membersSub}" var="q"
+											 emptyMessage="No hay usuarios disponibles"
+											 scrollable="true" scrollHeight="150" 											 
+											 rowKey="#{q.id}" selection="#{collaborativeBean.selectedMemberData}">
+											 
+								    <p:ajax event="rowSelectCheckbox" update=":formParametros:sNumM" />
+        							<p:ajax event="rowUnselectCheckbox" update=":formParametros:sNumM" />
+        							<p:ajax event="toggleSelect" update=":formParametros:sNumM" />
+        							
+								    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>											 
+								    
+								    <p:column headerText="ID" filterBy="#{q.id}" filterMatchMode="contains">
+								        <h:outputText value="#{q.id}" />
+								    </p:column>
+								    
+								    <p:column headerText="Usuario" filterBy="#{q.name}" filterMatchMode="contains">
+								        <h:outputText value="#{q.name}" />
+								    </p:column>
+								</p:dataTable>
+				            </p:panelGrid>
+				        					            
+				        </p:tab>
+				 			
+				        <p:tab id="parameters" title="Parametros">
+				        	<div class="row"> 
+       							<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+       								<h:panelGroup styleClass="md-inputfield">
+                                    	<p:inputNumber id="nroMemxGroup" minValue="2" decimalPlaces="0" value="#{collaborativeBean.collaborativeActual.numMembersxGroup}" required="true" requiredMessage="Ingrese el numero de miembros por grupo"/>
+                                    	<label>Numero de Miembros por Grupo</label>
+                                    	<p:message for="nroMemxGroup" />
+                                	</h:panelGroup>
+                                	
+                                	<h:panelGroup styleClass="md-inputfield">                                		
+                                    	<p:inputNumber id="nroIndiv" minValue="1" decimalPlaces="0" value="#{collaborativeBean.collaborativeActual.numIndividuals}" required="true" requiredMessage="Ingrese el numero de individuos"/>
+                                    	<label>Numero de Individuos</label>
+                                    	<p:message for="nroIndiv" />
+                                	</h:panelGroup>
+                               	</p:panelGrid>
+                            </div>
+                            <div class="row"> 
+       							<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+       								<h:panelGroup styleClass="md-inputfield">
+                                    	<p:inputNumber id="nroCarac" decimalPlaces="0" value="#{collaborativeBean.collaborativeActual.numCaracteristicas}" required="true" requiredMessage="Ingrese el numero de caracteristicas" disabled="true"/>
+                                    	<label>Numero de Caracteristicas</label>
+                                    	<p:message for="nroCarac" />
+                                	</h:panelGroup>
+                                	
+                                	<h:panelGroup styleClass="md-inputfield">                                		
+                                    	<p:inputNumber id="nroGeneraciones" minValue="1" decimalPlaces="0" value="#{collaborativeBean.collaborativeActual.numGeneraciones}" required="true" requiredMessage="Ingrese el numero de generaciones"/>
+                                    	<label>Numero de Generaciones</label>
+                                    	<p:message for="nroGeneraciones" />
+                                	</h:panelGroup>
+                               	</p:panelGrid>
+                            </div>					            					            
+                            <div class="row"> 
+       							<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+       								<h:panelGroup styleClass="md-inputfield">
+                                    	<p:inputNumber id="mediaAptitud" value="#{collaborativeBean.collaborativeActual.mediaAptitud}" required="true" requiredMessage="Ingrese la media de aptitud"/>
+                                    	<label>Media de Aptitud</label>
+                                    	<p:message for="mediaAptitud" />
+                                	</h:panelGroup>
+                                	
+                                	<h:panelGroup styleClass="md-inputfield">                                		
+                                    	<p:inputNumber id="porcentajeSeleccion" minValue="0" maxValue="100" symbol="%" symbolPosition="s" value="#{collaborativeBean.collaborativeActual.porcentajeSeleccion}" required="true" requiredMessage="Ingrese el porcentaje de seleccion"/>
+                                    	<label>Porcentaje de Seleccion</label>
+                                    	<p:message for="porcentajeSeleccion" />
+                                	</h:panelGroup>
+                               	</p:panelGrid>
+                            </div>
+                            <div class="row"> 
+       							<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+       								<h:panelGroup styleClass="md-inputfield">                                		
+                                    	<p:inputNumber id="probMutaI" minValue="0" maxValue="100" symbol="%" symbolPosition="s" value="#{collaborativeBean.collaborativeActual.probabilidadMutarInd}" required="true" requiredMessage="Ingrese la probabilidad de mutación de individuos"/>
+                                    	<label>Probabilidad Mutación Individuos</label>
+                                    	<p:message for="probMutaI" />
+                                	</h:panelGroup>
+                                	
+                                	<h:panelGroup styleClass="md-inputfield">                                		
+                                    	<p:inputNumber id="probMutaG" minValue="0" maxValue="100" symbol="%" symbolPosition="s" value="#{collaborativeBean.collaborativeActual.probabilidadMutarGen}" required="true" requiredMessage="Ingrese la probabilidad de mutación de genes"/>
+                                    	<label>Probabilidad Mutación Genes</label>
+                                    	<p:message for="probMutaG" />
+                                	</h:panelGroup>
+                               	</p:panelGrid>
+                            </div>
+                            
+                            <br/>
+				        </p:tab>
+				        <p:tab id="confirm" title="Confirmación">
+				        	<div class="row">
+					        	<h:panelGrid columns="3" columnClasses="grid,grid,grid">
+					        		<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
+			                    		<h:outputText style="font-weight: bold;" value="Numero de miembros:" />
+			                        	<h:outputText value="#{collaborativeBean.selectedMemberData.size()}" styleClass="outputLabel"/>
+				                        
+				                        <h:outputText style="font-weight: bold;" value="Numero de miembros por grupo:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numMembersxGroup}" styleClass="outputLabel"/>
+			                        	
+			                        	<h:outputText style="font-weight: bold;" value="Numero de Individuos:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numIndividuals}" styleClass="outputLabel"/>
+			                    	</p:panelGrid>
+			                    	
+			                    	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
+			                    		<h:outputText style="font-weight: bold;" value="Numero de Caracteristicas:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numCaracteristicas}" styleClass="outputLabel"/>
+				                        
+			                        	<h:outputText style="font-weight: bold;" value="Numero de Generaciones:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numGeneraciones}" styleClass="outputLabel"/>
+			                        	
+				                        <h:outputText style="font-weight: bold;" value="Media de aptitud:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.mediaAptitud}" styleClass="outputLabel"/>			                        	
+			                    	</p:panelGrid>
+			                    	
+			                    	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
+			                    		<h:outputText style="font-weight: bold;" value="Porcentje de seleccion:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.porcentajeSeleccion}%" styleClass="outputLabel"/>
+				                        
+				                        <h:outputText style="font-weight: bold;" value="Probabilidad de mutacion de individuos:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.probabilidadMutarInd}%" styleClass="outputLabel"/>
+			                        	
+			                        	<h:outputText style="font-weight: bold;" value="Probabilidad de mutacion de genes:" />
+			                        	<h:outputText value="#{collaborativeBean.collaborativeActual.probabilidadMutarGen}%" styleClass="outputLabel"/>
+			                    	</p:panelGrid>
+			                    </h:panelGrid>
+		                    </div>
+		                    
+				        	<div class="row">				        		
+		    					<p:dataTable value="#{collaborativeBean.selectedMemberData}" var="q"
+											 emptyMessage="No hay usuarios seleccionados"
+											 scrollable="true" scrollHeight="100" >
+								 	<f:facet name="header">Miembros Seleccionados</f:facet>
+								    
+								    <p:column headerText="ID" filterBy="#{q.id}" filterMatchMode="contains">
+								        <h:outputText value="#{q.id}" />
+								    </p:column>
+								    
+								    <p:column headerText="Usuario" filterBy="#{q.name}" filterMatchMode="contains">
+								        <h:outputText value="#{q.name}" />
+								    </p:column>
+								</p:dataTable>					            
+				        	</div>
+				        	
+				        	<div class="row">		            					            
+					            <p:commandButton actionListener="#{collaborativeBean.procesarGA(collaborativeBean.selectedMemberData,true)}" action="/views/admin/formedGroups.xhtml" icon="ui-icon-send" value="Confirmar" style="width:100%;"
+					            onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>       							
+                            </div>
+				        </p:tab>
+				    </p:wizard>
+		    	</h:form>
+		    </p:dialog>
+		    
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+    </ui:define>
+</ui:composition>

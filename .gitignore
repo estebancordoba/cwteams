@@ -1,0 +1,12 @@
+/.settings
+/bin
+
+/src/main/webapp/settings/Settings.properties
+/src/test
+
+/target
+
+.classpath
+.project
+.springBeans
+.tern-project

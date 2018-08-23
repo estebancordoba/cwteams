@@ -1,0 +1,35 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/serenity">
+
+    <div class="layout-sidebar #{guestPreferences.darkMenu ? 'layout-sidebar-dark' : ''}">
+        <div class="sidebar-logo">
+            <a href="index.xhtml">
+                <p:graphicImage name="images/logo-slim.png" library="serenity-layout" />
+                <span class="app-name">CW-Teams</span>
+            </a>
+            <a href="#" class="sidebar-anchor" title="Toggle Menu"></a>
+        </div>
+
+        <div class="nano">
+            <div class="nano-content sidebar-scroll-content">
+                <div class="layout-menu-container">
+                    <h:form id="menuform">
+                        <pm:menu>
+                            <p:menuitem id="sr_home" value="Inicio" icon="&#xE871;" outcome="/index.html"/>
+                            <p:submenu id="sr_collaborative" label="Trabajo Colaborativo" icon="&#xe886;" >
+                            	<p:menuitem id="sr_form_groups" value="Conformar Grupos" icon="&#xe428;" url="/views/guest/formGroups.xhtml" />
+                            </p:submenu>  
+                            <p:menuitem id="sr_bfi_surveys" value="BF - Manager" title="Software para la gestión de cuestionarios tipo Big Five" icon="&#xe3fe;" url="../bfmanager/" target="_blank"/>                          
+                        </pm:menu>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

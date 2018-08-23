@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE something>
+
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <url-mapping id="login">
+        <pattern value="/" />
+        <view-id value="index.xhtml" />
+    </url-mapping>     
+    <url-mapping id="adminUsers">
+	    <pattern value="/admin/adminUsers" />
+	    <view-id value="/views/admin/adminUsers.xhtml" />
+	</url-mapping>	
+	<url-mapping id="dashboard">
+	    <pattern value="/admin/dashboard" />
+	    <view-id value="/views/admin/dashboard.xhtml" />
+	</url-mapping>
+	<url-mapping id="suggestions">
+	    <pattern value="/admin/suggestions" />
+	    <view-id value="/views/admin/suggestions.xhtml" />
+	</url-mapping>  
+	<url-mapping id="backup">
+	    <pattern value="/admin/backup" />
+	    <view-id value="/views/admin/backup.xhtml" />
+	</url-mapping>
+	<url-mapping id="profileA">
+	    <pattern value="/admin/profile" />
+	    <view-id value="/views/admin/profile.xhtml" />
+	</url-mapping>
+	<url-mapping id="formGroups">
+	    <pattern value="/admin/formGroups" />
+	    <view-id value="/views/admin/formGroups.xhtml" />
+	</url-mapping>  
+	<url-mapping id="formedGroups">
+	    <pattern value="/admin/formedGroups" />
+	    <view-id value="/views/admin/formedGroups.xhtml" />
+	</url-mapping> 
+	
+	<url-mapping id="managerS">
+	    <pattern value="/manager/dashboard" />
+	    <view-id value="/views/manager/dashboard.xhtml" />
+	</url-mapping>  
+	<url-mapping id="profileM">
+	    <pattern value="/manager/profile" />
+	    <view-id value="/views/manager/profile.xhtml" />
+	</url-mapping>
+	<url-mapping id="formGroupsM">
+	    <pattern value="/manager/formGroups" />
+	    <view-id value="/views/manager/formGroups.xhtml" />
+	</url-mapping>  
+	<url-mapping id="formedGroupsM">
+	    <pattern value="/manager/formedGroups" />
+	    <view-id value="/views/manager/formedGroups.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="formGroupsG">
+	    <pattern value="/guest/formGroups" />
+	    <view-id value="/views/guest/formGroups.xhtml" />
+	</url-mapping>  
+	<url-mapping id="formedGroupsG">
+	    <pattern value="/guest/formedGroups" />
+	    <view-id value="/views/guest/formedGroups.xhtml" />
+	</url-mapping>
+	<url-mapping id="formedGroupsF">
+	    <pattern value="/guest/formedGroupsFree" />
+	    <view-id value="/views/guest/formedGroupsFree.xhtml" />
+	</url-mapping>
+   
+	   
+</pretty-config>

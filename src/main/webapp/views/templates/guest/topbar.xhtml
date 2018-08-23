@@ -1,0 +1,198 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pa="http://primefaces.org/serenity">
+
+    <div class="layout-topbar">
+    	<p:growl id="growlMsgs" showDetail="true" life="2000" />
+    	
+    	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		    <p:graphicImage name="images/ajaxloadingbar.gif" />
+		</p:dialog>
+    	
+		<p:dialog widgetVar="dlgAbout" header="Acerca de BF-Manager" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">    		
+       		<p:graphicImage name="images/logo-colored.png" library="serenity-layout" width="155" height="50" style="display:block;margin:0 auto 0 auto;"/>
+       		
+       		<div class="ui-g dashboard">  
+        
+	            <div class="ui-g-12 messages">
+	                
+	                    <ul>
+	                        <li>
+	                            <a href="#">
+	                                <p:graphicImage name="images/authors/author1.png" width="45"/>
+	                                <div>
+	                                    <span class="name">Esteban Córdoba</span>
+	                                    <span class="message">franco12594@udenar.edu.co</span>
+	                                </div>                                
+	                                
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="#">
+	                                <p:graphicImage name="images/authors/author2.png" width="45"/>
+	                                <div>
+	                                    <span class="name">Oscar Revelo</span>
+	                                    <span class="message">orevelo@udenar.edu.co</span>	                                    
+	                                    
+	                                </div>	                                
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="#">
+	                                <p:graphicImage name="images/authors/author3.png" width="45"/>
+	                                <div>
+	                                    <span class="name">Alexander Barón</span>
+	                                    <span class="message">abaron@udenar.edu.co</span>
+	                                </div>	                                
+	                            </a>
+	                        </li>	                        
+	                    </ul>
+	            </div>
+	        </div>
+       		<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank">
+       			<p:graphicImage name="images/logogaleras.png" width="124" height="79" style="display:block;margin:0 auto 0 auto;"/>
+       			<p:graphicImage name="images/logoudenar.png" width="124" height="94" style="display:block;margin:0 auto 0 auto;"/>
+       		</p:panelGrid>       		
+       	</p:dialog>
+    	
+    	<p:dialog header="Sugerencias" id="dialogS" widgetVar="dlgSug" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="50%">
+			<p:ajax event="close" update=":dialogS" listener="#{ratingsBean.cancelar()}"/>
+			<h:form>	
+				<p:outputPanel id="panelA">			
+		            <div class="ui-g">	                
+						<h:outputLabel for="ratingW" value="Por favor califica el aplicativo: " styleClass="ui-g-12 ui-lg-3"/>
+				        <p:rating cancel="false" required="true" requiredMessage="Selecciona una calificacion" id="ratingW" value="#{ratingsBean.rating.rating}" styleClass="ui-g-12 ui-lg-7"/>				        		                
+		        	</div>
+		        
+			        <div class="ui-g">
+			        <h:outputText value="Tienes alguna sugerencia u observación:" styleClass="ui-g-12 ui-lg-3"/>						                
+	                <p:textEditor widgetVar="editorDes" value="#{ratingsBean.rating.suggestion}" styleClass="ui-g-12 ui-lg-9" height="100">
+				        <f:facet name="toolbar">
+				            <span class="ql-formats">
+				                <button class="ql-bold"></button>
+				                <button class="ql-italic"></button>
+				                <button class="ql-underline"></button>
+				            </span>							            
+				            <span class="ql-formats">
+				                <select class="ql-color"></select>
+				                <select class="ql-background"></select>
+				            </span>
+				             <span class="ql-formats">
+				                 <button class="ql-script" value="sub"></button>
+				                 <button class="ql-script" value="super"></button>
+				            </span>
+				            <span class="ql-formats">
+				                 <button class="ql-list" value="ordered"></button>
+				                 <button class="ql-list" value="bullet"></button>
+				                 <select class="ql-align"></select>
+				            </span>
+				        </f:facet>
+				    </p:textEditor>		        
+					</div>	
+		            <p:separator/>
+		            <div style="text-align:center;">
+						<p:commandButton update="growlMsgs,panelA" style="width: 50%; margin: 0 auto; display: inline-block;" actionListener="#{ratingsBean.guardar()}" icon="ui-icon-check" value="Enviar" oncomplete="if (!args.validationFailed){PF('dlgSug').hide();}else{PF('dlgSug').jq.effect('shake', {times:5}, 100);}"/>
+					</div>
+					</p:outputPanel>
+				</h:form>  		        		
+    		</p:dialog>
+    	
+    	<h:form id="pgLogin">
+		    <p:dialog header="Acceso" responsive="true" widgetVar="dlg" resizable="false" modal="true">
+		    	<p:focus id="focus" context="pgLogin"/>		    		
+		        	<p:panelGrid columns="1" styleClass="form-group ui-panelgrid-blank" layout="grid">
+		        		
+		        		<h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="usuario" value="#{loginBean.user.user}" maxlength="20" size="22" required="true" requiredMessage="Digite su usuario!" />
+                            <p:outputLabel value="Usuario:" for="usuario" />
+                        </h:panelGroup>
+                        
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:password id="contrasenia" value="#{loginBean.user.pass}" label="contrasenia" required="true" requiredMessage="Digite su contraseña!" />
+                            <p:outputLabel value="Contraseña:" for="contrasenia" />
+                        </h:panelGroup>
+                        
+                        <p:commandLink value="Olvidó su contraseña?" style="margin-right: 10px;" 
+                                           oncomplete="PF('dlgReminderPass').show();" update=":formReminderPass" immediate="true"/>
+                        
+                    </p:panelGrid>
+                    
+		        <p:separator/>
+		        <center>
+		        	<p:commandButton icon="ui-icon-person" value="Ingresar" actionListener="#{usersBean.cancelar()}" update="growlMsgs" action="#{loginBean.efectuarLogin}"
+		                                 oncomplete="handleLoginRequest(xhr, status, args)" />	 
+		            <p:commandButton value="Cancelar" icon="ui ui-icon-cancel" oncomplete="PF('dlg').hide()"/>		            
+	            </center>                                 			          
+		    </p:dialog>
+		</h:form>
+		
+		<p:dialog widgetVar="dlgReminderPass" closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+			<p:ajax event="close" listener="#{usersBean.cancelar()}" update=":formReminderPass" resetValues="true" />
+			<h:form id="formReminderPass">			    
+	            <p:panelGrid columns="1" id="pReminder" layout="grid" styleClass="ui-panelgrid-blank form-group">				            
+                	<h:panelGroup styleClass="md-inputfield">
+                    	<p:inputText id="rName" required="true" requiredMessage="Ingrese un nombre" validator="#{usersBean.userValidate}"/>
+                    	<label>Usuario</label>
+                        <p:message for="rName" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="md-inputfield">
+                       	<p:inputText id="uEmail" value="#{usersBean.n_email}" required="true" requiredMessage="Ingrese el correo" validator="#{usersBean.emailValidate}"/>
+                       	<label>Correo</label>
+                       	<p:message for="uEmail" /> 
+                   	</h:panelGroup>		                
+	            </p:panelGrid>
+	            <p:separator/>
+	            <p:commandButton value="Enviar" update="pReminder,growlMsgs" actionListener="#{usersBean.sendEmail(usersBean.n_email)}" icon="ui-icon-send" oncomplete="if (!args.validationFailed){PF('dlgReminderPass').hide();}else{PF('dlgReminderPass').jq.effect('shake', {times:5}, 100);}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>					                
+	            <p:commandButton value="Cancelar" update=":formReminderPass" actionListener="#{usersBean.cancelar()}" resetValues="true" icon="ui ui-icon-cancel" oncomplete="PF('dlgReminderPass').hide()" immediate="true"/>		        
+		    </h:form>
+	    </p:dialog>	
+		
+    
+        <p:graphicImage name="images/logo-slim.png" library="serenity-layout" styleClass="mobile-logo" />
+
+        <a href="#" class="menu-btn">
+            <i class="material-icons">&#xE5D2;</i>
+        </a>
+
+        <a href="#" class="topbar-menu-btn">
+            <i class="material-icons">&#xE853;</i>
+        </a>
+
+        <div class="layout-topbar-menu-wrapper">            
+            <ul class="topbar-menu animated">
+                <li class="profile-item">
+               		<h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="Login">       
+                        <i class="topbar-icon material-icons">&#xe7fd;</i>
+                        <span class="topbar-item-name">Ingresar</span>
+                    </h:outputLink>
+				    
+                </li>                
+                <li>
+                    <a href="#">
+                        <i class="topbar-icon material-icons">&#xE8B8;</i>
+                        <span class="topbar-item-name">Settings</span>
+                    </a>
+                    <ul class="ultima-menu animated">
+                        <li role="menuitem">
+                            <h:outputLink onclick="PF('dlgSug').show();" title="login">       
+		                        <i class="topbar-icon material-icons">&#xe83a;</i>
+		                        <span class="topbar-item-name">Sugerencias</span>
+		                    </h:outputLink>
+                        </li>
+                        <li role="menuitem">
+                            <h:outputLink onclick="PF('dlgAbout').show();" title="about">       
+		                        <i class="topbar-icon material-icons">&#xe0ba;</i>
+		                        <span class="topbar-item-name">Acerca de BF-Manager</span>
+		                    </h:outputLink>
+                        </li>                  
+                    </ul>
+                </li>                
+            </ul>
+        </div>
+    </div>
+
+</ui:composition>

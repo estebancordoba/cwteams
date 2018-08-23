@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/views/templates/admin/templateAdmin.xhtml">
+                
+    <ui:define name="breadcrumb">
+    	<li>Sugerencias</li>
+    </ui:define>            
+                
+    <ui:define name="content">
+                <p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" life="6000" escape="false" />
+
+				<p:panel id="pnl" header="Sugerencias">										
+					
+					<h:form id="formSuggestions">
+						<p:dataTable id="tbl" value="#{ratingsBean.ratings}" var="q"
+									 emptyMessage="No hay sugerencias disponibles"
+									 widgetVar="tbl"
+									 rows="10" paginator="true" paginatorPosition="bottom"
+									 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									 rowsPerPageTemplate="5,10,15">
+						    <p:column headerText="Calificacion" filterBy="#{q.rating}" filterMatchMode="contains">
+						        <p:rating readonly="true" value="#{q.rating}" />						        
+						    </p:column>
+						    
+						    <p:column headerText="Sugerencia">
+						        <h:outputText value="#{q.suggestion}" escape="false" />
+						    </p:column>
+						     
+						    <p:column style="width:15%;text-align: center">
+					            
+					            <p:commandButton update=":formSuggestions" actionListener="#{ratingsBean.eliminar(q.idRating)}" icon="ui-icon-trash" title="Eliminar">
+					            	<p:confirm header="Confirmación" message="Desea eliminar el registro?" icon="ui-icon-alert" />
+					            </p:commandButton>
+					            					                   
+					        </p:column>		
+						</p:dataTable>
+												
+					</h:form>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:panel>
+				
+            </ui:define>
+</ui:composition>

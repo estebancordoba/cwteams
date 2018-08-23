@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<application>
+      <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>     
+  </application>
+  
+  
+  <application>     
+      <locale-config>
+        <default-locale>es</default-locale>
+        <supported-locale>en</supported-locale>
+      </locale-config>
+      
+      <resource-bundle>
+        <base-name>com.cwteams.languages.messages</base-name>
+        <var>language</var>
+      </resource-bundle>
+      
+      <message-bundle>com.cwteams.languages.messages</message-bundle>
+  </application>
+  
+  <lifecycle>
+      <!-- <phase-listener>com.cwteams.security.AuthorizationListener</phase-listener> -->
+      <phase-listener>com.cwteams.security.LoginPhaseListener</phase-listener>
+    </lifecycle>
+    
+</faces-config>

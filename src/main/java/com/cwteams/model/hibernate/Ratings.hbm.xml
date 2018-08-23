@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 12/09/2017 09:26:56 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="cwteams" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.cwteams.model.hibernate.Ratings" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="ratings" lazy="false">
+        <id name="idRating" type="java.lang.Long">
+            <column name="id_rating"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="rating" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="rating"/>
+        </property>
+        <property generated="never" lazy="false" name="suggestion" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="suggestion"/>
+        </property>
+        <property generated="never" lazy="false" name="view" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="view"/>
+        </property>
+    </class>
+</hibernate-mapping>

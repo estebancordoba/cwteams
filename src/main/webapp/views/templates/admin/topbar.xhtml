@@ -1,0 +1,100 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pa="http://primefaces.org/serenity">
+
+    <div class="layout-topbar">
+    	<p:growl id="growlMsgs" sticky="true" showDetail="true" life="3000" />
+    	<p:dialog widgetVar="dlgFirst" visible="#{usersBean.obtenerUsuarioFirst(usersBean.obtenerUsuario().idUser)}" header="Por favor cambie su contraseña" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
+			<h:form>	    			
+   				<p:panelGrid id="matchGrid" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+															
+					<h:panelGroup styleClass="md-inputfield">											
+                          	<p:password id="pass1" value="#{usersBean.n_pass}" match="pass2" feedback="true" redisplay="true"
+									strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil"
+									label="Ingresa una contraseña" promptLabel="Por favor ingrese una contraseña"
+									required="true" requiredMessage="Ingrese una contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+						<p:message for="pass1" />
+						<label>Contraseña</label>	                                    	
+                      	</h:panelGroup>
+                            	
+                      	<h:panelGroup styleClass="md-inputfield">											
+						<p:password id="pass2" value="#{usersBean.n_pass}" feedback="true" redisplay="true"
+									strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil" 
+									promptLabel="Por favor ingrese una contraseña"
+									required="true" requiredMessage="Ingrese nuevamente la contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+						<p:message for="pass2" />                               
+						<label>Repetir Contraseña</label>     	
+                      	</h:panelGroup>  
+                      	
+                      	<h:panelGroup styleClass="md-inputfield">
+                          	<p:inputText id="uEmail" value="#{usersBean.n_email}" required="true" requiredMessage="Ingrese el correo" validator="#{usersBean.emailValidate}"/>
+                          	<label>Correo</label>
+                          	<p:message for="uEmail" /> 
+                      	</h:panelGroup>                           							
+				</p:panelGrid>
+				<p:separator/>
+	            <p:commandButton style="width:100%;" update="matchGrid" value="Guardar" actionListener="#{usersBean.cambiarPassFirst()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgFirst').hide();}else{PF('dlgFirst').jq.effect('shake', {times:5}, 100);}"/>
+            </h:form>				                
+   		</p:dialog>
+    
+        <p:graphicImage name="images/logo-slim.png" library="serenity-layout" styleClass="mobile-logo" />
+
+        <a href="#" class="menu-btn">
+            <i class="material-icons">&#xE5D2;</i>
+        </a>
+
+        <a href="#" class="topbar-menu-btn">
+            <i class="material-icons">&#xE853;</i>
+        </a>
+
+        <div class="layout-topbar-menu-wrapper">            
+            <ul class="topbar-menu animated">
+                <li class="profile-item">
+                    <a href="#">       
+                        <span class="profile-image-wrapper">
+                            <p:graphicImage name="images/avatar.png"/>
+                        </span>                     
+                        <span class="topbar-item-name profile-name"><p:outputLabel value="#{usersBean.obtenerUsuario().user}"/></span>
+                    </a>
+
+                    <ul class="animated">
+                        <li role="menuitem">
+                            <a href="profile">
+                                <i class="material-icons">&#xE7FD;</i>
+                                <span>Perfil</span>
+                            </a>
+                        </li>                        
+                        <li role="menuitem">
+                        	<p:commandLink action="#{loginBean.efectuarLogoff()}">
+        						<i class="material-icons">&#xE8AC;</i>
+                                <span>Logout</span>
+    						</p:commandLink>							
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <i class="topbar-icon material-icons">&#xe7f4;</i>
+                        <span class="topbar-badge animated rubberBand" style="display: #{ratingsBean.ratingNoView==0 ? 'none' : ''};"><p:outputLabel value="#{ratingsBean.ratingNoView}"/></span>
+                        <span class="topbar-item-name">Notificaciones</span>
+                    </a>
+                    <ul class="ultima-menu animated">
+                        <li role="menuitem">
+                            <a href="suggestions">
+                                <i class="material-icons">&#xe838;</i>
+                                <span>Sugerencias</span>
+                                <span class="topbar-badge animated rubberBand" style="display: #{ratingsBean.ratingNoView==0 ? 'none' : ''};"><p:outputLabel value="#{ratingsBean.ratingNoView}"/></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</ui:composition>

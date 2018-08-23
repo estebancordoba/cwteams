@@ -1,0 +1,40 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/serenity">
+
+    <div class="layout-sidebar #{guestPreferences.darkMenu ? 'layout-sidebar-dark' : ''}">
+        <div class="sidebar-logo">
+        	<p:link outcome="dashboard">
+                <p:graphicImage name="images/logo-slim.png" library="serenity-layout" />
+                <span class="app-name">CW-Teams</span>            
+            </p:link>
+            <a href="#" class="sidebar-anchor" title="Toggle Menu"></a>
+        </div>
+
+        <div class="nano">
+            <div class="nano-content sidebar-scroll-content">
+                <div class="layout-menu-container">
+                    <h:form id="menuform">
+                        <pm:menu>
+                            <p:menuitem id="sr_dashboard" value="Dashboard" icon="&#xE871;" outcome="dashboard"/>                            
+                            <p:submenu id="sr_collaborative" label="Trabajo Colaborativo" icon="&#xe886;" >
+                            	<p:menuitem id="sr_form_groups" value="Conformar Grupos" icon="&#xe428;" url="/views/admin/formGroups.xhtml" />
+                            </p:submenu>   
+                            <p:menuitem id="sr_bfi_suggestions" value="Sugerencias" icon="&#xe838;" url="/views/admin/suggestions.xhtml" >
+                            	<f:attribute name="badge" value="#{ratingsBean.ratingNoView}" />
+                            </p:menuitem>                                          
+                            <p:submenu id="sr_settings" label="Administracion" icon="&#xe8b8;">
+                                <p:menuitem id="sr_sett_users" value="Gestionar Usuarios" icon="&#xe0ba;" url="/views/admin/adminUsers.xhtml" />                            
+                            </p:submenu>  
+                        </pm:menu>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>
