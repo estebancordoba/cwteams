@@ -6,7 +6,7 @@
                 template="/views/templates/admin/templateAdmin.xhtml">
     
      <ui:define name="breadcrumb">
-    	<li>Copias de Seguridad</li>
+    	<li>#{language.backups}</li>
     </ui:define>
                 
     <ui:define name="content">              	
@@ -16,45 +16,45 @@
 				    <p:graphicImage name="images/ajaxloadingbar.gif" />
 				</p:dialog>
 
-				<p:panel id="pnl" header="Copias de Seguridad">
+				<p:panel id="pnl" header="#{language.backups}">
 									
-					<p:commandButton value="Nueva Copia de Seguridad" icon="ui ui-icon-add" update=":formBackup" oncomplete="PF('dlgBackup').show()"/>
-					<p:commandButton value="Subir Copia de Seguridad" update=":dialogBK" icon="ui ui-icon-attach-file" oncomplete="PF('dlgSubmitBK').show()"/>			
+					<p:commandButton value="#{language.new_backup}" icon="ui ui-icon-add" update=":formBackup" oncomplete="PF('dlgBackup').show()"/>
+					<p:commandButton value="#{language.upload_backup}" update=":dialogBK" icon="ui ui-icon-attach-file" oncomplete="PF('dlgSubmitBK').show()"/>			
 					
 					<br/><br/>
 					
 					<h:form id="formBackups">
-						<p:dataTable id="tbl" value="#{backupBean.backupFiles}" var="bk" emptyMessage="Sin registros"
+						<p:dataTable id="tbl" value="#{backupBean.backupFiles}" var="bk" emptyMessage="#{language.no_records}"
 							widgetVar="backupsTable"
 							rows="10" paginator="true" paginatorPosition="bottom" 
 							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						 	rowsPerPageTemplate="5,10,15">
 			
-							<f:facet name="header">Copias de Seguridad Realizadas</f:facet>
+							<f:facet name="header">#{language.backups_made}</f:facet>
 										
-							<p:column headerText="Nombre del archivo" style="text-align:center;" sortBy="#{bk.name}" filterBy="#{bk.name}" filterMatchMode="contains">
+							<p:column headerText="#{language.name_file}" style="text-align:center;" sortBy="#{bk.name}" filterBy="#{bk.name}" filterMatchMode="contains">
 								<h:outputText value="#{bk.name}" />
 							</p:column>
 			
-							<p:column headerText="Fecha - Hora" style="text-align:center;" sortBy="#{bk.date_hour}" filterBy="#{bk.date_hour}" filterMatchMode="contains">
+							<p:column headerText="#{language.date_hour}" style="text-align:center;" sortBy="#{bk.date_hour}" filterBy="#{bk.date_hour}" filterMatchMode="contains">
 								<h:outputText value="#{bk.date_hour}" />
 							</p:column>
 							
-							<p:column headerText="Tamaño" sortBy="#{bk.size}" style="text-align:center;">
+							<p:column headerText="#{language.size}" sortBy="#{bk.size}" style="text-align:center;">
 								<h:outputText value="#{bk.size}" />
 							</p:column>
 							
 							<p:column style="width:20%;text-align: center">
 														    					            					            
-					            <p:commandButton update=":formRestore" oncomplete="PF('dlgRestore').show();" icon="ui-icon-import-export" title="Restaurar">
+					            <p:commandButton update=":formRestore" oncomplete="PF('dlgRestore').show();" icon="ui-icon-import-export" title="#{language.restore}">
 					            	<f:setPropertyActionListener value="#{bk}" target="#{backupBean.backupFile}" />
 					            </p:commandButton>					        
 					            
-					            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload()" icon="ui-icon-file-download" title="Descargar" >
+					            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload()" icon="ui-icon-file-download" title="#{language.download}" >
 		                            <p:fileDownload value="#{backupBean.download(bk.name)}" />
 		                        </p:commandButton>
 					            
-					            <p:commandButton update=":formEliminar" oncomplete="PF('dlgEliminar').show();" icon="ui-icon-trash" title="Eliminar">
+					            <p:commandButton update=":formEliminar" oncomplete="PF('dlgEliminar').show();" icon="ui-icon-trash" title="#{language.remove}">
 		                            <f:setPropertyActionListener value="#{bk}" target="#{backupBean.backupFile}" />
 		                        </p:commandButton>
 					        </p:column>	
@@ -63,64 +63,64 @@
 					</h:form>
 					
 					<h:form id="formBackup">
-		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="Realizar Copia de Seguridad" widgetVar="dlgBackup" resizable="false" focus="cbCancel" 
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.perform_backup}" widgetVar="dlgBackup" resizable="false" focus="cbCancel" 
 		                          onHide="PF('dlgBackup').content.empty()">
 		                          		                    
 		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">                        
-		                        <h:outputText value="Se realizará una copia de seguridad de la Base de Datos a la fecha" />
+		                        <h:outputText value="#{language.backup_made_current_date}" />
 		                    </h:panelGrid>
 		                    <p:separator/>
 		                    <h:panelGroup style="display:block; text-align:center">
-		                        <p:commandButton style="margin-right: 5px" value="Aceptar" update=":formBackups:tbl" action="#{backupBean.backup}" 
+		                        <p:commandButton style="margin-right: 5px" value="#{language.accept}" update=":formBackups:tbl" action="#{backupBean.backup}" 
 		                                         oncomplete="PF('dlgBackup').hide();PF('backupsTable').filter();" icon="ui-icon-check" 
 		                                         onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="Cancelar" oncomplete="PF('dlgBackup').hide();" icon="ui-icon-close"/>
+		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="#{language.cancel}" oncomplete="PF('dlgBackup').hide();" icon="ui-icon-close"/>
 		                    </h:panelGroup>
 		                </p:dialog>
 		            </h:form>        
 		            
 		            <h:form id="formRestore">
-		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="Restaurar Copia de Seguridad" widgetVar="dlgRestore" resizable="false" focus="cbCancel" 
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.restore_backup}" widgetVar="dlgRestore" resizable="false" focus="cbCancel" 
 		                          onHide="PF('dlgResore').content.empty()">		                    
 		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">
-		                        <h:outputText value="¿Está seguro que desea restaurar la copia de seguridad&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" 
+		                        <h:outputText value="#{language.sure_restore_backup}&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" 
 		                                      escape="false" />
 		                    </h:panelGrid>
 		                    <p:separator/>
 		                    <h:panelGroup style="display:block; text-align:center">
-		                        <p:commandButton style="margin-right: 5px" value="Aceptar" action="#{backupBean.restore}" 
+		                        <p:commandButton style="margin-right: 5px" value="#{language.accept}" action="#{backupBean.restore}" 
 		                                         oncomplete="PF('dlgRestore').hide();" icon="ui-icon-check" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="Cancelar" oncomplete="PF('dlgRestore').hide();" icon="ui-icon-close"/>
+		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="#{language.cancel}" oncomplete="PF('dlgRestore').hide();" icon="ui-icon-close"/>
 		                    </h:panelGroup>
 		                </p:dialog>
 		            </h:form>
 		            
 		            <h:form id="formEliminar">
-		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="Eliminar Archivo de Copia de Seguridad..." widgetVar="dlgEliminar" resizable="false" 
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.remove_backup}" widgetVar="dlgEliminar" resizable="false" 
 		                          focus="cbCancel" onHide="PF('dlgEliminar').content.empty()">
 		                    <p:growl id="growlEliminar" showSummary="true" showDetail="true" life="2000"/>		                    
 		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">                        
-		                        <h:outputText value="¿Está seguro que desea eliminar la copia de seguridad&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" escape="false" />
+		                        <h:outputText value="#{language.sure_remove_backup}&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" escape="false" />
 		                    </h:panelGrid>
 		                    <p:separator/>
 		                    <h:panelGroup style="display:block; text-align:center">
-		                        <p:commandButton style="margin-right: 5px" value="Aceptar" update=":formBackups:tbl,growlEliminar" action="#{backupBean.delete()}" 
+		                        <p:commandButton style="margin-right: 5px" value="#{language.accept}" update=":formBackups:tbl,growlEliminar" action="#{backupBean.delete()}" 
 		                                         oncomplete="PF('dlgEliminar').hide();PF('backupsTable').filter();" icon="ui-icon-check" />
-		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="Cancelar" oncomplete="PF('dlgEliminar').hide();" icon="ui-icon-close"/>
+		                        <p:commandButton style="margin-left: 5px" id="cbCancel" value="#{language.cancel}" oncomplete="PF('dlgEliminar').hide();" icon="ui-icon-close"/>
 		                    </h:panelGroup>
 		                </p:dialog>
 		            </h:form>
 					
 				</p:panel>	
 				
-				<p:dialog widgetVar="dlgSubmitBK" onHide="PF('dlgSubmitBK').content.empty()" closeOnEscape="true" id="dialogBK" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="Subir Backup desde archivo SQL">							
+				<p:dialog widgetVar="dlgSubmitBK" onHide="PF('dlgSubmitBK').content.empty()" closeOnEscape="true" id="dialogBK" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="#{language.upload_csv}">							
 						<p:ajax event="close" resetValues="true" />
 						<h:form enctype="multipart/form-data">
 							<p:fileUpload id="fileBK" fileUploadListener="#{backupBean.submitBK}" mode="advanced" dragDropSupport="true"
           							sizeLimit="10000000" fileLimit="1" allowTypes="/(\.|\/)(sql)$/" 
-          							cancelLabel="Cancelar" invalidFileMessage="Tipo de archivo invalido" invalidSizeMessage="Tamaño invalido"
-          							fileLimitMessage="Limite de archivos alcanzado" required="true" requiredMessage="Aun no ha seleccionado ningun archivo"
-          							uploadLabel="Subir" label="Elegir" update="fileBK,growl" accept=".sql" oncomplete="PF('dlgSubmitBK').hide(),PF('statusDialog').hide()" 
+          							cancelLabel="#{language.cancel}" invalidFileMessage="#{language.type_file_invalid}" invalidSizeMessage="#{language.invalid_size}"
+          							fileLimitMessage="#{language.limit_files_reached}" required="true" requiredMessage="#{language.no_file_selected}"
+          							uploadLabel="#{language.upload}" label="#{language.choose}" update="fileBK,growl" accept=".sql" oncomplete="PF('dlgSubmitBK').hide(),PF('statusDialog').hide()" 
           							onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>          								           						
 						</h:form>		
 				</p:dialog>            	

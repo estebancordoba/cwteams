@@ -108,10 +108,10 @@ public class BackupBean implements Serializable {
 			    bfwriter.close();
 			    
 				this.backupFiles.add(new BackupFileUtil(f));
-				MsgUtil.msgInfo("Exito!", "La copia de seguridad ha sido realizada exitosamente!");
+				MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("backup_made"));
 			} 
 			else {
-				MsgUtil.msgError("Error!","La copia de seguridad no ha podido ser realizada!");
+				MsgUtil.msgError(LanguageBean.obtenerMensaje("error"),LanguageBean.obtenerMensaje("backup_made_error"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,10 +125,10 @@ public class BackupBean implements Serializable {
 			Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
 			int processComplete = runtimeProcess.waitFor();
 			if (processComplete == 0) {
-				MsgUtil.msgInfo("Exito!", "La copia de seguridad ha sido restaurada exitosamente!");
+				MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("backup_restored"));
 			} 
 			else {
-				MsgUtil.msgError("Error!", "La copia de seguridad no ha podido ser restaurada!");
+				MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("backup_restored_error"));
 			}
 		} 
 		catch (Exception ex) {
@@ -150,9 +150,9 @@ public class BackupBean implements Serializable {
 		if (file.delete()) {
 			this.backupFiles.remove(this.backupFile);
 			this.backupFile = null;
-			MsgUtil.msgInfo("Exito!", "El archivo ha sido eliminado exitosamente!");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("backup_remove"));
 		} else {
-			MsgUtil.msgError("Error!", "El archivo no puede ser borrado!");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("backup_remove_error"));
 		}
 	}
 	
@@ -198,22 +198,22 @@ public class BackupBean implements Serializable {
 					Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
 					int processComplete = runtimeProcess.waitFor();
 					if (processComplete == 0) {
-						MsgUtil.msgInfo("Exito!", "La copia de seguridad ha sido restaurada exitosamente!");
+						MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("backup_restored"));
 					} else {
-						MsgUtil.msgError("Error!", "La copia de seguridad no ha podido ser restaurada!");
+						MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("backup_restored_error"));
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 	        }
 	        else{
-	        	MsgUtil.msgError("Error!", "Archivo de copia de seguridad invalido.");
+	        	MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("backup_invalid_file"));
 	        }
             
             f.delete();
             
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar subir el archivo.");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("backup_upload_error"));
 			e.printStackTrace();
 		}		
 	}

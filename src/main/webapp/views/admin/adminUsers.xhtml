@@ -6,48 +6,48 @@
                 template="/views/templates/admin/templateAdmin.xhtml">
     
     <ui:define name="breadcrumb">
-    	<li>Administracion</li>
+    	<li>#{language.administration}</li>
         <li>/</li>
-    	<li>Usuarios</li>    	        
+    	<li>#{language.users}</li>    	        
     </ui:define>
                 
     <ui:define name="content">              	
                 <p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" life="6000" escape="false" />
 
-				<p:panel id="pnl" header="Administración de Usuarios">
+				<p:panel id="pnl" header="#{language.user_administration}">
 				
-					<p:commandButton value="Nuevo Usuario" update=":formUsers" icon="ui ui-icon-add" actionListener="#{usersBean.cancelar()}" oncomplete="PF('dlgAgregar').show()"/>
-					<p:commandButton value="Subir Usuarios desde CSV" update=":dialogMU" icon="ui ui-icon-attach-file" oncomplete="PF('dlgMultipleUsers').show()"/>					
+					<p:commandButton value="#{language.new_user}" update=":formUsers" icon="ui ui-icon-add" actionListener="#{usersBean.cancelar()}" oncomplete="PF('dlgAgregar').show()"/>
+					<p:commandButton value="#{language.upload_csv}" update=":dialogMU" icon="ui ui-icon-attach-file" oncomplete="PF('dlgMultipleUsers').show()"/>					
 					<br/><br/>
 					
 					<h:form><p:remoteCommand name="prepararA" autoRun="true" update=":formUsers" actionListener="#{usersBean.firstUser()}"/></h:form>
 					
 					<h:form id="formUsers">
-						<p:dataTable id="tbl" value="#{usersBean.usuarios}" var="u" emptyMessage="Sin registros"
+						<p:dataTable id="tbl" value="#{usersBean.usuarios}" var="u" emptyMessage="#{language.no_records}"
 							widgetVar="tbl" rows="10" paginator="true" paginatorPosition="bottom" rowsPerPageTemplate="5,10,15"  
 							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						 	rowKey="#{u.idUser}" selection="#{usersBean.selectedUsers}">
 			
-							<f:facet name="header">Usuarios registrados</f:facet>
+							<f:facet name="header">#{language.registered_users}</f:facet>
 							
 							<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 						
-							<p:column headerText="Usuario" style="text-align:center;" filterBy="#{u.user}" filterMatchMode="contains">
+							<p:column headerText="#{language.user}" style="text-align:center;" filterBy="#{u.user}" filterMatchMode="contains">
 								<h:outputText value="#{u.user}" />
 							</p:column>
 						
-							<p:column headerText="Nombre" style="text-align:center;" filterBy="#{u.name}" filterMatchMode="contains">
+							<p:column headerText="#{language.name}" style="text-align:center;" filterBy="#{u.name}" filterMatchMode="contains">
 								<h:outputText value="#{u.name} #{u.surname}" />
 							</p:column>
 			
-							<p:column headerText="Email" style="text-align:center;" filterBy="#{u.email}" filterMatchMode="exact">
+							<p:column headerText="#{language.email}" style="text-align:center;" filterBy="#{u.email}" filterMatchMode="exact">
 								<h:outputText value="#{u.email}" />
 							</p:column>
 			
-							<p:column headerText="Rol" style="text-align:center;" filterBy="#{u.userType}" filterMatchMode="exact">
+							<p:column headerText="#{language.role}" style="text-align:center;" filterBy="#{u.userType}" filterMatchMode="exact">
 								<f:facet name="filter">
 									<p:selectOneMenu onchange="PF('tbl').filter()">
-										<f:selectItem itemLabel="Elegir" itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItem itemLabel="#{language.choose}" itemValue="#{null}" noSelectionOption="true" />
 										<f:selectItems value="#{usersBean.roles}" var="rl" itemLabel="#{rl.description}" />
 									</p:selectOneMenu>
 								</f:facet>
@@ -55,37 +55,37 @@
 							</p:column>
 							
 							<p:column style="width:20%;text-align: center">
-					            <p:commandButton actionListener="#{usersBean.actualizar(u.idUser)}" update=":formUsers" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-pencil" title="Editar"/>					                
-					            <p:commandButton actionListener="#{usersBean.cambiarC(u.idUser)}" update=":formUsers" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-autorenew" title="Cambiar Contraseña"/>
-					            <p:commandButton update=":formUsers:tbl" actionListener="#{usersBean.eliminar(u.idUser)}" icon="ui-icon-trash" title="Eliminar">
-					            	<p:confirm header="Confirmación" message="Desea eliminar el registro?" icon="ui-icon-alert" />
+					            <p:commandButton actionListener="#{usersBean.actualizar(u.idUser)}" update=":formUsers" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-pencil" title="#{language.edit}"/>					                
+					            <p:commandButton actionListener="#{usersBean.cambiarC(u.idUser)}" update=":formUsers" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-autorenew" title="#{language.change_password}"/>
+					            <p:commandButton update=":formUsers:tbl" actionListener="#{usersBean.eliminar(u.idUser)}" icon="ui-icon-trash" title="#{language.remove}">
+					            	<p:confirm header="#{language.confirmation}" message="#{language.delete_record}" icon="ui-icon-alert" />
 					            </p:commandButton>
 					        </p:column>    
 						
 						</p:dataTable>
 						
 						<br/>
-						<p:commandButton update=":formUsers:tbl" icon="ui-icon-playlist-add-check" value="Eliminar elementos seleccionados" actionListener="#{usersBean.eliminarVariosUsuarios()}">
-							<p:confirm header="Confirmación" message="Desea eliminar los registros?" icon="ui-icon-alert" />
+						<p:commandButton update=":formUsers:tbl" icon="ui-icon-playlist-add-check" value="#{language.delete_selected_elements}" actionListener="#{usersBean.eliminarVariosUsuarios()}">
+							<p:confirm header="#{language.confirmation}" message="#{language.delete_records}" icon="ui-icon-alert" />
 						</p:commandButton>
 						
 						<p:dialog widgetVar="dlgAgregar" onHide="PF('dlgAgregar').content.empty()" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 							<p:ajax event="close" update=":formUsers:dialogA" listener="#{usersBean.cancelar()}" />
 							<h:form>
 							<p:tabView id="tabA">								
-	        					<p:tab title="Datos Requeridos" rendered="#{usersBean.mDatos}">							
+	        					<p:tab title="#{language.data_required}" rendered="#{usersBean.mDatos}">							
 						            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
 											                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
-	                                    	<p:inputText id="uUser" value="#{usersBean.user.user}" required="true" requiredMessage="Ingrese un nombre" validator="#{usersBean.userExists}"/>	                                    		
-	                                    	<label>Usuario</label>
+	                                    	<p:inputText id="uUser" value="#{usersBean.user.user}" required="true" requiredMessage="#{language.enter_name}" validator="#{usersBean.userExists}"/>	                                    		
+	                                    	<label>#{language.user}</label>
 	                                    	<p:message for="uUser" />
 	                                	</h:panelGroup>		
 	                                	
 	                                	<h:panelGroup>	                                				  		                                		                               		
-	                                    	<p:selectOneMenu id="rol" value="#{usersBean.user.userType}" converter="#{rolConverter}" placeholder="Rol" 
-	                                    					 required="true" requiredMessage="Seleccione un rol">
-	                                    		<f:selectItem itemLabel="Rol" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />					                														
+	                                    	<p:selectOneMenu id="rol" value="#{usersBean.user.userType}" converter="#{rolConverter}" placeholder="#{language.role}" 
+	                                    					 required="true" requiredMessage="#{language.select_role}">
+	                                    		<f:selectItem itemLabel="#{language.role}" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />					                														
 												<f:selectItems value="#{usersBean.roles}" var="r" itemLabel="#{r.description}" itemValue="#{r}"/>
 											</p:selectOneMenu>
 											<p:message for="rol" />         	
@@ -94,56 +94,56 @@
 									</p:panelGrid>
 								</p:tab>
 								
-								<p:tab title="Datos Opcionales" rendered="#{usersBean.mDatos}">							
+								<p:tab title="#{language.optional_data}" rendered="#{usersBean.mDatos}">							
 						            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
 										<h:panelGroup styleClass="md-inputfield">
 	                                    	<p:inputText value="#{usersBean.user.name}"/>
-	                                    	<label>Nombre</label>
+	                                    	<label>#{language.name}</label>
 	                                	</h:panelGroup>
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
 	                                    	<p:inputText value="#{usersBean.user.surname}"/>
-	                                    	<label>Apellido</label>
+	                                    	<label>#{language.surname}</label>
 	                                	</h:panelGroup>	
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
 	                                    	<p:inputText value="#{usersBean.user.phone}"/>
-	                                    	<label>Telefono</label>
+	                                    	<label>#{language.phone}</label>
 	                                	</h:panelGroup>	
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
-	                                    	<p:inputText id="uEmail" value="#{usersBean.user.email}" required="true" requiredMessage="Ingrese el correo" validator="#{usersBean.emailValidate}"/>
-	                                    	<label>Correo</label>
+	                                    	<p:inputText id="uEmail" value="#{usersBean.user.email}" required="true" requiredMessage="#{language.enter_email}" validator="#{usersBean.emailValidate}"/>
+	                                    	<label>#{language.email}</label>
 	                                    	<p:message for="uEmail" /> 
 	                                	</h:panelGroup>
 						
 									</p:panelGrid>
 								</p:tab>
 								
-								<p:tab title="Contraseña" rendered="#{usersBean.mPass}">
+								<p:tab title="#{language.password}" rendered="#{usersBean.mPass}">
 									<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
 											
 										<h:panelGroup>
-	                                		<h:outputText value="Cambiar contraseña al iniciar sesion " for="first_i"/>
+	                                		<h:outputText value="#{language.change_password_login}" for="first_i"/>
 							        		<p:selectBooleanCheckbox id="first_i" value="#{usersBean.user.first}"/>         	
 	                                	</h:panelGroup>
 																				
 										<h:panelGroup styleClass="md-inputfield">											
 	                                    	<p:password id="pass1" value="#{usersBean.user.pass}" match="pass2" feedback="true" redisplay="true"
-											strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil"
-											label="Ingresa una contraseña" promptLabel="Por favor ingrese una contraseña"
-											required="true" requiredMessage="Ingrese una contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+											strongLabel="#{language.strong_password}" goodLabel="#{language.good_password}" weakLabel="#{language.weak_password}"
+											label="#{language.enter_password}" promptLabel="#{language.please_enter_password}"
+											required="true" requiredMessage="#{language.enter_password}" validatorMessage="#{language.passwords_must_match}"/>
 											<p:message for="pass1" />
-											<label>Contraseña</label>	                                    	
+											<label>#{language.password}</label>	                                    	
 	                                	</h:panelGroup>
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">											
 											<p:password id="pass2" value="#{usersBean.user.pass}" feedback="true" redisplay="true"
-												strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil" 
-												promptLabel="Por favor ingrese una contraseña"
-												required="true" requiredMessage="Ingrese nuevamente la contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+												strongLabel="#{language.strong_password}" goodLabel="#{language.good_password}" weakLabel="#{language.weak_password}"
+												label="#{language.enter_password}"
+												required="true" requiredMessage="#{language.enter_password_again}" validatorMessage="#{language.passwords_must_match}"/>
 											<p:message for="pass2" />                               
-											<label>Repetir Contraseña</label>     	
+											<label>#{language.repeat_password}</label>     	
 	                                	</h:panelGroup>
 	                                							
 									</p:panelGrid>
@@ -151,26 +151,26 @@
 							</p:tabView>							
 									            
 				            <p:separator/>
-				            <p:commandButton value="Guardar" update="tabA,:formUsers:tbl" actionListener="#{usersBean.guardar()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgAgregar').hide();}else{PF('dlgAgregar').jq.effect('shake', {times:5}, 100);}"/>					                
-				            <p:commandButton value="Cancelar" update="tabA" actionListener="#{usersBean.cancelar()}" icon="ui ui-icon-cancel" oncomplete="PF('dlgAgregar').hide()" immediate="true"/>						        
+				            <p:commandButton value="#{language.save}" update="tabA,:formUsers:tbl" actionListener="#{usersBean.guardar()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgAgregar').hide();}else{PF('dlgAgregar').jq.effect('shake', {times:5}, 100);}"/>					                
+				            <p:commandButton value="#{language.cancel}" update="tabA" actionListener="#{usersBean.cancelar()}" icon="ui ui-icon-cancel" oncomplete="PF('dlgAgregar').hide()" immediate="true"/>						        
 						    </h:form>
 					    </p:dialog>			
 					</h:form>
 					
-					<p:dialog widgetVar="dlgMultipleUsers" onHide="PF('dlgMultipleUsers').content.empty()" closeOnEscape="true" id="dialogMU" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="Ingresar usuarios desde archivo CSV">							
+					<p:dialog widgetVar="dlgMultipleUsers" onHide="PF('dlgMultipleUsers').content.empty()" closeOnEscape="true" id="dialogMU" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="#{language.upload_csv}">							
 						<p:ajax event="close" resetValues="true" />
 						<h:form enctype="multipart/form-data">
 							<p:fileUpload id="fileMU" fileUploadListener="#{usersBean.submitMultipleUsers}" mode="advanced" dragDropSupport="true"
           							sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(csv)$/" 
-          							cancelLabel="Cancelar" invalidFileMessage="Tipo de archivo invalido" invalidSizeMessage="Tamaño invalido"
-          							fileLimitMessage="Limite de archivos alcanzado" required="true" requiredMessage="Aun no ha seleccionado ningun archivo"
-          							uploadLabel="Subir" label="Elegir" update=":formUsers:tbl" accept=".csv" oncomplete="PF('dlgMultipleUsers').hide()"/>          								           						
+          							cancelLabel="#{language.cancel}" invalidFileMessage="#{language.type_file_invalid}" invalidSizeMessage="#{language.invalid_size}"
+          							fileLimitMessage="#{language.limit_files_reached}" required="true" requiredMessage="#{language.no_file_selected}"
+          							uploadLabel="#{language.upload}" label="#{language.choose}" update=":formUsers:tbl" accept=".csv" oncomplete="PF('dlgMultipleUsers').hide()"/>          								           						
 						</h:form>		
 					</p:dialog>
 						
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						<p:commandButton value="#{language.yes}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="#{language.no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
 				</p:panel>	
             </ui:define>

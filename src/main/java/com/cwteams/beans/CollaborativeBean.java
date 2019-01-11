@@ -112,7 +112,7 @@ public class CollaborativeBean implements Serializable {
 	public String onFlowProcess(FlowEvent event) {
 		
 		if(archivoSubido==false && event.getOldStep().equals("submitdata") && !event.getNewStep().equals("submitdata")){
-			FacesMessage msg = new FacesMessage("Debe subir el archivo con los datos");
+			FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("should_upload_file_data"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			
@@ -120,7 +120,7 @@ public class CollaborativeBean implements Serializable {
 		}
 		
 		if(selectedMemberData!=null && (selectedMemberData.isEmpty() || selectedMemberData.size()<4) && event.getOldStep().equals("members")){
-			FacesMessage msg = new FacesMessage("Debe seleccionar una cantidad de miembros coherente");
+			FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("should_select_consistent_amount"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			
@@ -137,7 +137,7 @@ public class CollaborativeBean implements Serializable {
 		}
 		
 		if(event.getOldStep().equals("parameters") && !event.getNewStep().equals("members") && selectedMemberData.size()<collaborativeActual.getNumMembersxGroup()){
-			FacesMessage msg = new FacesMessage("Numero de miembros por grupo no es coherente con el numero total de miembros");
+			FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("number_member_not_consistent"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			
@@ -516,9 +516,9 @@ public class CollaborativeBean implements Serializable {
 	public void actualizar() {		
 		try {	
 			collaborativeService.updateCollaborativeGa(collaborativeActual);			
-			MsgUtil.msgInfo("Exito!", "Registro actualizado correctamente.");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("record_updated"));
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar actualizar el registro.");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("record_updated_error"));
 			e.printStackTrace();
 		}
 	}
@@ -527,9 +527,9 @@ public class CollaborativeBean implements Serializable {
 		try {	
 			CollaborativeGa eliminar=collaborativeService.searchCollaborativeGaxId(id_collaborative); 	
 			collaborativeService.removeCollaborativeGa(eliminar);			
-			MsgUtil.msgInfo("Exito!", "Registro eliminado correctamente.");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("record_removed"));
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar eliminar el registro.");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("record_removed_error"));
 			e.printStackTrace();
 		}		
 		selectCollaborative=null;
@@ -540,9 +540,9 @@ public class CollaborativeBean implements Serializable {
 			for (CollaborativeGa eliminar : selectCollaborative) {	
 				collaborativeService.removeCollaborativeGa(eliminar);
 			}
-			MsgUtil.msgInfo("Exito!", "Registros eliminados correctamente.");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("record_removed"));
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar eliminar los registros.");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("record_removed_error"));
 			e.printStackTrace();
 		}		
 		selectCollaborative=null;
@@ -557,8 +557,8 @@ public class CollaborativeBean implements Serializable {
 			cga.setFree(!activado);			
 			collaborativeService.updateCollaborativeGa(cga);	
 			
-			if(activado) MsgUtil.msgInfo("Exito!", "Grupo liberado");
-			else MsgUtil.msgInfo("Exito!", "Grupo ocultado");			
+			if(activado) MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("group_released"));
+			else MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("group_hidden"));			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -595,12 +595,12 @@ public class CollaborativeBean implements Serializable {
 	        linxlin=auxt.split("=");
 	        
 	        if(linxlin.length!=2){
-	        	errorSubmitData("Parametro de nombre de grupo invalido",linea,br,f);
+	        	errorSubmitData(LanguageBean.obtenerMensaje("invalid_group_name"),linea,br,f);
         		return;
 	        }
 	        else{	        	
 	        	if(!linxlin[0].trim().equals("group_name")){
-	        		errorSubmitData("Parametro de nombre de grupo invalido",linea,br,f);
+	        		errorSubmitData(LanguageBean.obtenerMensaje("invalid_group_name"),linea,br,f);
 	        		return;
 	        	}
 	        	groupN=linxlin[1].trim();
@@ -613,12 +613,12 @@ public class CollaborativeBean implements Serializable {
 	        linxlin=auxt.split("=");
 	        
 	        if(linxlin.length!=2){
-	        	errorSubmitData("Parametro de desccripcion de grupo invalido",linea,br,f);
+	        	errorSubmitData(LanguageBean.obtenerMensaje("invalid_group_description"),linea,br,f);
         		return;
 	        }
 	        else{	        	
 	        	if(!linxlin[0].trim().equals("group_description")){
-	        		errorSubmitData("Parametro de desccripcion de grupo invalido",linea,br,f);
+	        		errorSubmitData(LanguageBean.obtenerMensaje("invalid_group_description"),linea,br,f);
 	        		return;
 	        	}
 	        	groupD=linxlin[1].trim();
@@ -631,19 +631,19 @@ public class CollaborativeBean implements Serializable {
 	        linxlin=auxt.split("=");
 	        
 	        if(linxlin.length!=2){
-	        	errorSubmitData("Parametro de numero de caracteristicas invalido",linea,br,f);
+	        	errorSubmitData(LanguageBean.obtenerMensaje("invalid_feature_number"),linea,br,f);
         		return;
 	        }
 	        else{	        	
 	        	if(!linxlin[0].trim().equals("characteristics_number")){
-	        		errorSubmitData("Parametro de numero de caracteristicas invalido",linea,br,f);
+	        		errorSubmitData(LanguageBean.obtenerMensaje("invalid_feature_number"),linea,br,f);
 	        		return;
 	        	}
 	        	else{
 	        		try {
 	    	        	numCharac=Integer.parseInt(linxlin[1]);
 	    			} catch (Exception e) {				
-	                    errorSubmitData("Numero de caracterisiticas invalido",linea,br,f);
+	                    errorSubmitData(LanguageBean.obtenerMensaje("invalid_feature_number"),linea,br,f);
 	            		return;
 	    			}
 	        	}
@@ -662,7 +662,7 @@ public class CollaborativeBean implements Serializable {
 	        	linxlin=auxt.split(";");
 	        	
 	        	if(linxlin.length!=3){
-	        		errorSubmitData("Datos de caracteristicas invalido",linea,br,f);	        		
+	        		errorSubmitData(LanguageBean.obtenerMensaje("invalid_feature_data"),linea,br,f);	        		
 	        		return;
 	        	}
 	        	characC[i]=linxlin[0];
@@ -670,11 +670,11 @@ public class CollaborativeBean implements Serializable {
 	        		minC[i]=Double.parseDouble(linxlin[1]);
 	        		maxC[i]=Double.parseDouble(linxlin[2]);
 	        		if(minC[i]>=maxC[i]){
-	        			errorSubmitData("Minimos y maximos de caracteristicas invalidos",linea,br,f);	        		
+	        			errorSubmitData(LanguageBean.obtenerMensaje("min_max_invalid_features"),linea,br,f);	        		
 		        		return;
 	        		}
 				} catch (Exception e) {					
-					errorSubmitData("Datos de caracteristicas invalido",linea,br,f);	        		
+					errorSubmitData(LanguageBean.obtenerMensaje("invalid_feature_data"),linea,br,f);	        		
 	        		return;
 				}
 	        	linea++;
@@ -685,19 +685,19 @@ public class CollaborativeBean implements Serializable {
 	        linxlin=auxt.split("=");
 	        
 	        if(linxlin.length!=2){
-	        	errorSubmitData("Parametro de numero de miembros invalido",linea,br,f);
+	        	errorSubmitData(LanguageBean.obtenerMensaje("invalid_members_number_parameter"),linea,br,f);
         		return;
 	        }
 	        else{	        	
 	        	if(!linxlin[0].trim().equals("members_number")){
-	        		errorSubmitData("Parametro de numero de miembros invalido",linea,br,f);
+	        		errorSubmitData(LanguageBean.obtenerMensaje("invalid_members_number_parameter"),linea,br,f);
 	        		return;
 	        	}
 	        	else{
 	        		try {
 	    	        	numMem=Integer.parseInt(linxlin[1]);
 	    			} catch (Exception e) {				
-	                    errorSubmitData("Numero de miembros invalido",linea,br,f);
+	                    errorSubmitData(LanguageBean.obtenerMensaje("invalid_members_number_parameter"),linea,br,f);
 	            		return;
 	    			}
 	        	}
@@ -710,12 +710,12 @@ public class CollaborativeBean implements Serializable {
 	        linxlin=auxt.split("=");
 	        	        
 	        if(linxlin.length!=2){
-	        	errorSubmitData("Parametro de nombre invalido",linea,br,f);
+	        	errorSubmitData(LanguageBean.obtenerMensaje("invalid_name_parameter"),linea,br,f);
         		return;
 	        }
 	        else{	        	
 	        	if(!linxlin[0].trim().equals("available_name") || (!linxlin[1].trim().equals("true") && !linxlin[1].trim().equals("false")) ){
-	        		errorSubmitData("Parametro de nombre invalido",linea,br,f);
+	        		errorSubmitData(LanguageBean.obtenerMensaje("invalid_name_parameter"),linea,br,f);
 	        		return;
 	        	}
 	        	else{
@@ -735,7 +735,7 @@ public class CollaborativeBean implements Serializable {
 				auxt=br.readLine();
 		        linxlin=auxt.split(";");
 		        if(linxlin.length!=numCO){
-		        	errorSubmitData("Parametros miembros invalidos",linea,br,f);
+		        	errorSubmitData(LanguageBean.obtenerMensaje("invalid_members_parameter"),linea,br,f);
 	        		return;
 		        }
 		        
@@ -743,7 +743,7 @@ public class CollaborativeBean implements Serializable {
 					Integer idxM=Integer.parseInt(linxlin[0]);			
 					
 					if(idsS.contains((Integer)idxM)){
-						errorSubmitData("ID de usuario repetido",linea,br,f);
+						errorSubmitData(LanguageBean.obtenerMensaje("repeated_user_id"),linea,br,f);
 		        		return;
 					}
 					else{
@@ -764,7 +764,7 @@ public class CollaborativeBean implements Serializable {
 					memDS.add(memxM);
 					
 				} catch (Exception e) {
-					errorSubmitData("Datos de miembros invalidos",linea,br,f);
+					errorSubmitData(LanguageBean.obtenerMensaje("invalid_members_parameter"),linea,br,f);
 	        		return;
 				}		        
 		        
@@ -785,17 +785,17 @@ public class CollaborativeBean implements Serializable {
             
             archivoSubido=true;
             
-            MsgUtil.msgInfo("Exito!", "Archivo subido correctamente.");
+            MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("file_upload"));
             
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar subir el archivo.");			
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("file_upload_error"));			
             archivoSubido=false;
 			e.printStackTrace();
 		}		
 	}
 
 	private void errorSubmitData(String mensaje, int linea, BufferedReader br, File f) throws IOException {
-		MsgUtil.msgError("Error!", mensaje+", linea "+linea+".");
+		MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), mensaje+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");
 		br.close();
         f.delete();
         archivoSubido=false;

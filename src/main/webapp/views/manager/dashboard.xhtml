@@ -8,23 +8,23 @@
     <ui:define name="content">            	
          <h:form id="formCollaborative">
              						
-			<p:dataTable id="tbl" value="#{collaborativeBean.getCollaborativeGaxOwner(usersBean.obtenerUsuario().idUser)}" var="s" emptyMessage="No hay grupos formados"									
+			<p:dataTable id="tbl" value="#{collaborativeBean.getCollaborativeGaxOwner(usersBean.obtenerUsuario().idUser)}" var="s" emptyMessage="#{language.no_groups_formed}"									
 					 rows="10" paginator="true" paginatorPosition="bottom"
 					 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					 rowsPerPageTemplate="5,10,15">
 					 
-		    <p:column headerText="Nombre" filterBy="#{s.name}" filterMatchMode="contains">
+		    <p:column headerText="#{language.name}" filterBy="#{s.name}" filterMatchMode="contains">
 		        <h:outputText value="#{s.name}" />
 		    </p:column>	
 		    
-		    <p:column headerText="Descripcion" filterBy="#{s.description}" filterMatchMode="contains">
+		    <p:column headerText="#{language.description}" filterBy="#{s.description}" filterMatchMode="contains">
 		        <h:outputText value="#{s.description}" />
 		    </p:column>	
 		    
-		    <p:column headerText="Dueño" style="text-align:center;" filterBy="#{s.userOwner}" filterMatchMode="exact">
+		    <p:column headerText="#{language.owner}" style="text-align:center;" filterBy="#{s.userOwner}" filterMatchMode="exact">
 				<f:facet name="filter">
 					<p:selectOneMenu onchange="PF('tblE').filter()">
-						<f:selectItem itemLabel="Elegir" itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItem itemLabel="#{language.choose}" itemValue="#{null}" noSelectionOption="true" />
 						<f:selectItems value="#{usersBean.usuarios}" var="rl" itemLabel="#{rl.name}" />
 					</p:selectOneMenu>
 				</f:facet>

@@ -49,7 +49,7 @@ public class RatingsBean implements Serializable{
 	public void guardar() {					
 		try {
 			ratingsService.saveRating(raiting);			
-			MsgUtil.msgInfo("Exito!", "Sugerencia enviada exitosamente.");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("suggestion_sent"));
 			raiting=new Ratings();			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +60,7 @@ public class RatingsBean implements Serializable{
 		try {
 			Ratings ra_eliminar = ratingsService.getRatingXId(id_r);
 			ratingsService.removeRating(ra_eliminar);
-			MsgUtil.msgInfo("Exito!", "Sugerencia eliminada correctamente.");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("suggestion_removed"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import com.cwteams.beans.LanguageBean;
 import com.cwteams.model.hibernate.UsersType;
 import com.cwteams.service.UsersService;
 
@@ -30,7 +31,7 @@ public class UserTypeConverter implements Converter {
 			}
 
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error!", "Rol no valido");
+			FacesMessage msg = new FacesMessage("Error!", LanguageBean.obtenerMensaje("invalid_user_type"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ConverterException(msg);
 		}
