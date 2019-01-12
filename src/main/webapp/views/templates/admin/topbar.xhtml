@@ -8,36 +8,36 @@
 
     <div class="layout-topbar">
     	<p:growl id="growlMsgs" sticky="true" showDetail="true" life="3000" />
-    	<p:dialog widgetVar="dlgFirst" visible="#{usersBean.obtenerUsuarioFirst(usersBean.obtenerUsuario().idUser)}" header="Por favor cambie su contraseña" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
+    	<p:dialog widgetVar="dlgFirst" visible="#{usersBean.obtenerUsuarioFirst(usersBean.obtenerUsuario().idUser)}" header="#{language.please_change_password}" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
 			<h:form>	    			
    				<p:panelGrid id="matchGrid" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
 															
 					<h:panelGroup styleClass="md-inputfield">											
                           	<p:password id="pass1" value="#{usersBean.n_pass}" match="pass2" feedback="true" redisplay="true"
-									strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil"
-									label="Ingresa una contraseña" promptLabel="Por favor ingrese una contraseña"
-									required="true" requiredMessage="Ingrese una contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+									strongLabel="#{language.strong_password}" goodLabel="#{language.good_password}" weakLabel="#{language.weak_password}"
+									label="#{language.enter_password}" promptLabel="#{language.please_enter_password}"
+									required="true" requiredMessage="#{language.enter_password}" validatorMessage="#{language.passwords_must_match}"/>
 						<p:message for="pass1" />
-						<label>Contraseña</label>	                                    	
+						<label>#{language.password}</label>	                                    	
                       	</h:panelGroup>
                             	
                       	<h:panelGroup styleClass="md-inputfield">											
 						<p:password id="pass2" value="#{usersBean.n_pass}" feedback="true" redisplay="true"
-									strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil" 
-									promptLabel="Por favor ingrese una contraseña"
-									required="true" requiredMessage="Ingrese nuevamente la contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+									strongLabel="#{language.strong_password}" goodLabel="#{language.good_password}" weakLabel="#{language.weak_password}" 
+									promptLabel="#{language.please_enter_password}"
+									required="true" requiredMessage="#{language.enter_password_again}" validatorMessage="#{language.passwords_must_match}"/>
 						<p:message for="pass2" />                               
-						<label>Repetir Contraseña</label>     	
+						<label>#{language.repeat_password}</label>     	
                       	</h:panelGroup>  
                       	
                       	<h:panelGroup styleClass="md-inputfield">
-                          	<p:inputText id="uEmail" value="#{usersBean.n_email}" required="true" requiredMessage="Ingrese el correo" validator="#{usersBean.emailValidate}"/>
-                          	<label>Correo</label>
+                          	<p:inputText id="uEmail" value="#{usersBean.n_email}" required="true" requiredMessage="#{language.enter_email}" validator="#{usersBean.emailValidate}"/>
+                          	<label>#{language.email}</label>
                           	<p:message for="uEmail" /> 
                       	</h:panelGroup>                           							
 				</p:panelGrid>
 				<p:separator/>
-	            <p:commandButton style="width:100%;" update="matchGrid" value="Guardar" actionListener="#{usersBean.cambiarPassFirst()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgFirst').hide();}else{PF('dlgFirst').jq.effect('shake', {times:5}, 100);}"/>
+	            <p:commandButton style="width:100%;" update="matchGrid" value="#{language.save}" actionListener="#{usersBean.cambiarPassFirst()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgFirst').hide();}else{PF('dlgFirst').jq.effect('shake', {times:5}, 100);}"/>
             </h:form>				                
    		</p:dialog>
     
@@ -65,13 +65,13 @@
                         <li role="menuitem">
                             <a href="profile">
                                 <i class="material-icons">&#xE7FD;</i>
-                                <span>Perfil</span>
+                                <span>#{language.profile}</span>
                             </a>
                         </li>                        
                         <li role="menuitem">
                         	<p:commandLink action="#{loginBean.efectuarLogoff()}">
         						<i class="material-icons">&#xE8AC;</i>
-                                <span>Logout</span>
+                                <span>#{language.logout}</span>
     						</p:commandLink>							
                         </li>
                     </ul>
@@ -81,13 +81,13 @@
                     <a href="#">
                         <i class="topbar-icon material-icons">&#xe7f4;</i>
                         <span class="topbar-badge animated rubberBand" style="display: #{ratingsBean.ratingNoView==0 ? 'none' : ''};"><p:outputLabel value="#{ratingsBean.ratingNoView}"/></span>
-                        <span class="topbar-item-name">Notificaciones</span>
+                        <span class="topbar-item-name">#{language.notifications}</span>
                     </a>
                     <ul class="ultima-menu animated">
                         <li role="menuitem">
                             <a href="suggestions">
                                 <i class="material-icons">&#xe838;</i>
-                                <span>Sugerencias</span>
+                                <span>#{language.suggestions}</span>
                                 <span class="topbar-badge animated rubberBand" style="display: #{ratingsBean.ratingNoView==0 ? 'none' : ''};"><p:outputLabel value="#{ratingsBean.ratingNoView}"/></span>
                             </a>
                         </li>

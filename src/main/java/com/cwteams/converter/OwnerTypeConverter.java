@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import com.cwteams.beans.LanguageBean;
 import com.cwteams.model.hibernate.Users;
 import com.cwteams.service.UsersService;
 
@@ -30,7 +31,7 @@ public class OwnerTypeConverter implements Converter{
 			}
 
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error!", "Usuario no valido");
+			FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_user"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ConverterException(msg);			
 		}

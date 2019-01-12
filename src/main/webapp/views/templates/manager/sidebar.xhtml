@@ -10,9 +10,9 @@
         <div class="sidebar-logo">
         	<p:link outcome="dashboard">
                 <p:graphicImage name="images/logo-slim.png" library="serenity-layout" />
-                <span class="app-name">CW-Teams</span>            
+                <span class="app-name">#{language.cw_teams}</span>            
             </p:link>
-            <a href="#" class="sidebar-anchor" title="Toggle Menu"></a>
+            <a href="#" class="sidebar-anchor" title="#{language.menu}"></a>
         </div>
 
         <div class="nano">
@@ -20,9 +20,9 @@
                 <div class="layout-menu-container">
                     <h:form id="menuform">
                         <pm:menu>
-                            <p:menuitem id="sr_dashboard" value="Dashboard" icon="&#xE871;" outcome="dashboard"/>                              
-                            <p:submenu id="sr_collaborative" label="Trabajo Colaborativo" icon="&#xe886;" >
-                            	<p:menuitem id="sr_form_groups" value="Conformar Grupos" icon="&#xe428;" url="/views/manager/formGroups.xhtml" />
+                            <p:menuitem id="sr_dashboard" value="#{language.dashboard}" icon="&#xE871;" outcome="dashboard"/>                              
+                            <p:submenu id="sr_collaborative" label="#{language.collaborative_work}" icon="&#xe886;" >
+                            	<p:menuitem id="sr_form_groups" value="#{language.groups_form}" icon="&#xe428;" url="/views/manager/formGroups.xhtml" />
                             </p:submenu>   
                         </pm:menu>
                     </h:form>

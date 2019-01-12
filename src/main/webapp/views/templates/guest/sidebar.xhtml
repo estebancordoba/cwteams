@@ -10,9 +10,9 @@
         <div class="sidebar-logo">
             <a href="index.xhtml">
                 <p:graphicImage name="images/logo-slim.png" library="serenity-layout" />
-                <span class="app-name">CW-Teams</span>
+                <span class="app-name">#{language.cw_teams}</span>
             </a>
-            <a href="#" class="sidebar-anchor" title="Toggle Menu"></a>
+            <a href="#" class="sidebar-anchor" title="#{language.menu}"></a>
         </div>
 
         <div class="nano">
@@ -20,11 +20,11 @@
                 <div class="layout-menu-container">
                     <h:form id="menuform">
                         <pm:menu>
-                            <p:menuitem id="sr_home" value="Inicio" icon="&#xE871;" outcome="/index.html"/>
-                            <p:submenu id="sr_collaborative" label="Trabajo Colaborativo" icon="&#xe886;" >
-                            	<p:menuitem id="sr_form_groups" value="Conformar Grupos" icon="&#xe428;" url="/views/guest/formGroups.xhtml" />
+                            <p:menuitem id="sr_home" value="#{language.home}" icon="&#xE871;" outcome="/index.html"/>
+                            <p:submenu id="sr_collaborative" label="#{language.collaborative_work}" icon="&#xe886;" >
+                            	<p:menuitem id="sr_form_groups" value="#{language.groups_form}" icon="&#xe428;" url="/views/guest/formGroups.xhtml" />
                             </p:submenu>  
-                            <p:menuitem id="sr_bfi_surveys" value="BF - Manager" title="Software para la gestión de cuestionarios tipo Big Five" icon="&#xe3fe;" url="../bfmanager/" target="_blank"/>                          
+                            <p:menuitem id="sr_bfi_surveys" value="#{language.bf_manager}" title="#{language.description_bf_manager}" icon="&#xe3fe;" url="../bfmanager/" target="_blank"/>                          
                         </pm:menu>
                     </h:form>
                 </div>

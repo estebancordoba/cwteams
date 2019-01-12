@@ -6,7 +6,7 @@
                 template="/views/templates/manager/templateManager.xhtml">
      
     <ui:define name="breadcrumb">
-        <li>Perfil</li>        
+        <li>#{language.profile}</li>        
     </ui:define>  
                 
     <ui:define name="content">
@@ -20,26 +20,26 @@
             <div class="ui-g-12 ui-lg-6">                
                 <div class="card card-w-title">
                 <p:outputPanel  id="divD">
-                	<h2>Datos de Usuario</h2>
+                	<h2>#{language.user_data}</h2>
                     <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
-                    	<h:outputText style="font-weight: bold;" value="Usuario:" />
+                    	<h:outputText style="font-weight: bold;" value="#{language.user}:" />
                         <h:outputText value="#{usersBean.obtenerUsuario().user}" />
                         
-                        <h:outputText style="font-weight: bold;" value="Rol:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.role}:" />
                         <h:outputText value="#{usersBean.obtenerUsuario().userType.rol}" />
                     </p:panelGrid>
                     <hr/>
                     <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
-                    	<h:outputText style="font-weight: bold;" value="Nombre:" />
+                    	<h:outputText style="font-weight: bold;" value="#{language.name}:" />
                         <h:outputText value="#{usersBean.obtenerUsuario().name}" />
                         
-                        <h:outputText style="font-weight: bold;" value="Apellido:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.surname}:" />
                         <h:outputText value="#{usersBean.obtenerUsuario().surname}" />
                         
-                        <h:outputText style="font-weight: bold;" value="Telefono:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.phone}:" />
                         <h:outputText value="#{usersBean.obtenerUsuario().phone}" />
                         
-                        <h:outputText style="font-weight: bold;" value="Correo:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.email}:" />
                         <h:outputText value="#{usersBean.obtenerUsuario().email}" />
                     </p:panelGrid>
                     </p:outputPanel>
@@ -48,10 +48,10 @@
             
             <div class="ui-g-12 ui-lg-6">                
                 <div class="card card-w-title">
-                    <h2>Editar</h2>
+                    <h2>#{language.edit}</h2>
                     <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
-	                    <p:commandButton actionListener="#{usersBean.actualizar(usersBean.obtenerUsuario().idUser)}" update=":formUser" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-pencil" value="Editar" title="Editar"/>					                
-						<p:commandButton actionListener="#{usersBean.cambiarC(usersBean.obtenerUsuario().idUser)}" update=":formUser" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-autorenew" value="Cambiar Contraseña" title="Cambiar Contraseña"/>
+	                    <p:commandButton actionListener="#{usersBean.actualizar(usersBean.obtenerUsuario().idUser)}" update=":formUser" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-pencil" value="#{language.edit}" title="#{language.edit}"/>					                
+						<p:commandButton actionListener="#{usersBean.cambiarC(usersBean.obtenerUsuario().idUser)}" update=":formUser" oncomplete="PF('dlgAgregar').show()"  icon="ui-icon-autorenew" value="#{language.change_password}" title="#{language.change_password}"/>
 					</p:panelGrid>	
             	</div>  
         	</div>
@@ -61,57 +61,57 @@
 							<p:ajax event="close" update=":formUser:dialogA" listener="#{usersBean.cancelar()}" />
 							<h:form>
 							<p:tabView id="tabA">								
-	        					<p:tab title="Datos de Usuario" rendered="#{usersBean.mDatos}">							
+	        					<p:tab title="#{language.user_data}" rendered="#{usersBean.mDatos}">							
 						            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
 											                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
-	                                    	<p:inputText id="uUser" value="#{usersBean.user.user}" required="true" requiredMessage="Ingrese un nombre" validator="#{usersBean.userExists}"/>	                                    		
-	                                    	<label>Usuario</label>
+	                                    	<p:inputText id="uUser" value="#{usersBean.user.user}" required="true" requiredMessage="#{language.enter_name}" validator="#{usersBean.userExists}"/>	                                    		
+	                                    	<label>#{language.user}</label>
 	                                    	<p:message for="uUser" />
 	                                	</h:panelGroup>
 						
 										<h:panelGroup styleClass="md-inputfield">
 	                                    	<p:inputText value="#{usersBean.user.name}"/>
-	                                    	<label>Nombre</label>
+	                                    	<label>#{language.name}</label>
 	                                	</h:panelGroup>
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
 	                                    	<p:inputText value="#{usersBean.user.surname}"/>
-	                                    	<label>Apellido</label>
+	                                    	<label>#{language.surname}</label>
 	                                	</h:panelGroup>	
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
 	                                    	<p:inputText value="#{usersBean.user.phone}"/>
-	                                    	<label>Telefono</label>
+	                                    	<label>#{language.phone}</label>
 	                                	</h:panelGroup>	
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">
-	                                    	<p:inputText id="uEmail" value="#{usersBean.user.email}" required="true" requiredMessage="Ingrese el correo" validator="#{usersBean.emailValidate}"/>
-	                                    	<label>Correo</label>
+	                                    	<p:inputText id="uEmail" value="#{usersBean.user.email}" required="true" requiredMessage="#{language.enter_email}" validator="#{usersBean.emailValidate}"/>
+	                                    	<label>#{language.email}</label>
 	                                    	<p:message for="uEmail" /> 
 	                                	</h:panelGroup>
 						
 									</p:panelGrid>
 								</p:tab>
 								
-								<p:tab title="Contraseña" rendered="#{usersBean.mPass}">
+								<p:tab title="#{language.password}" rendered="#{usersBean.mPass}">
 									<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">										
 										<h:panelGroup styleClass="md-inputfield">											
 	                                    	<p:password id="pass1" value="#{usersBean.user.pass}" match="pass2" feedback="true" redisplay="true"
-											strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil"
-											label="Ingresa una contraseña" promptLabel="Por favor ingrese una contraseña"
-											required="true" requiredMessage="Ingrese una contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+											strongLabel="#{language.strong_password}" goodLabel="#{language.good_password}" weakLabel="#{language.weak_password}"
+											label="#{language.enter_password}" promptLabel="#{language.please_enter_password}"
+											required="true" requiredMessage="#{language.enter_password}" validatorMessage="#{language.passwords_must_match}"/>
 											<p:message for="pass1" />
-											<label>Contraseña</label>	                                    	
+											<label>#{language.password}</label>	                                    	
 	                                	</h:panelGroup>
 	                                	
 	                                	<h:panelGroup styleClass="md-inputfield">											
 											<p:password id="pass2" value="#{usersBean.user.pass}" feedback="true" redisplay="true"
-												strongLabel="Contraseña Fuerte" goodLabel="Contraseña Buena" weakLabel="Contraseña Debil" 
-												promptLabel="Por favor ingrese una contraseña"
-												required="true" requiredMessage="Ingrese nuevamente la contraseña" validatorMessage="Las constraseñas deben coincidir"/>
+												strongLabel="#{language.strong_password}" goodLabel="#{language.good_password}" weakLabel="#{language.weak_password}" 
+												promptLabel="#{language.please_enter_password}"
+												required="true" requiredMessage="#{language.enter_password_again}" validatorMessage="#{language.passwords_must_match}"/>
 											<p:message for="pass2" />                               
-											<label>Repetir Contraseña</label>     	
+											<label>#{language.repeat_password}</label>     	
 	                                	</h:panelGroup>
 	                                							
 									</p:panelGrid>
@@ -119,8 +119,8 @@
 							</p:tabView>							
 									            
 				            <p:separator/>
-				            <p:commandButton value="Guardar" update="tabA,:formUser:divD" actionListener="#{usersBean.guardarProfile()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgAgregar').hide();}else{PF('dlgAgregar').jq.effect('shake', {times:5}, 100);}"/>					                
-				            <p:commandButton value="Cancelar" update="tabA" actionListener="#{usersBean.cancelar()}" icon="ui ui-icon-cancel" oncomplete="PF('dlgAgregar').hide()" immediate="true"/>						        
+				            <p:commandButton value="#{language.save}" update="tabA,:formUser:divD" actionListener="#{usersBean.guardarProfile()}" icon="ui ui-icon-add-circle-outline" oncomplete="if (!args.validationFailed){PF('dlgAgregar').hide();}else{PF('dlgAgregar').jq.effect('shake', {times:5}, 100);}"/>					                
+				            <p:commandButton value="#{language.cancel}" update="tabA" actionListener="#{usersBean.cancelar()}" icon="ui ui-icon-cancel" oncomplete="PF('dlgAgregar').hide()" immediate="true"/>						        
 						    </h:form>
 					    </p:dialog>   		
         </h:form>        	

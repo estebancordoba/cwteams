@@ -47,7 +47,7 @@ public class LoginBean implements Serializable {
                 
         if (user == null) {
         	loggedIn = false;        	
-            MsgUtil.msgWarning("Error",LanguageBean.obtenerMensaje("invalid_credentials"));
+            MsgUtil.msgWarning(LanguageBean.obtenerMensaje("error"),LanguageBean.obtenerMensaje("invalid_credentials"));
             user=new Users();
         } else {
         	FacesUtils.setUsuarioLogueado(user);        	

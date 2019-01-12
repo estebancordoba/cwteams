@@ -75,7 +75,7 @@ public class UsersBean implements Serializable {
 			try {
 				usersService.saveUser(user);
 				this.cancelar();
-				MsgUtil.msgInfo("Exito!", "Usuario guardado correctamente.");				
+				MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("user_save"));				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -83,7 +83,7 @@ public class UsersBean implements Serializable {
 			try {
 				usersService.updateUser(user);
 				this.cancelar();
-				MsgUtil.msgInfo("Exito!", "Usuario actualizado");
+				MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("user_updated"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -96,7 +96,7 @@ public class UsersBean implements Serializable {
 			usersService.updateUser(user);
 			FacesUtils.setUsuarioLogueado(user);
 			this.cancelar();
-			MsgUtil.msgInfo("Exito!", "Se ha modificado tu perfil");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("user_modified"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,7 +113,7 @@ public class UsersBean implements Serializable {
 		
 		if(usr!=null){				
 			if(!(editar && nomU.equals(userOldName))){
-				FacesMessage msg = new FacesMessage("Nombre de usuario ya existe");
+				FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("username_already_exists"));
 				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 				
 				throw new ValidatorException(msg);
@@ -140,7 +140,7 @@ public class UsersBean implements Serializable {
 		}	
 		
 		if(!valid){
-			FacesMessage msg = new FacesMessage("Nombre de usuario no existe");
+			FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("username_not_exist"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			
 			throw new ValidatorException(msg);
@@ -157,7 +157,7 @@ public class UsersBean implements Serializable {
 		pattern = Pattern.compile(EMAIL_PATTERN);
 		
 		if(!pattern.matcher(value.toString()).matches()) {
-			FacesMessage msg = new FacesMessage("Formato de correo invalido");
+			FacesMessage msg = new FacesMessage(LanguageBean.obtenerMensaje("invalid_email_format"));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			
 			throw new ValidatorException(msg);
@@ -186,7 +186,7 @@ public class UsersBean implements Serializable {
 		try {
 			Users user_eliminar = usersService.getUserXId(id_u);			
 			usersService.removeUser(user_eliminar);
-			MsgUtil.msgInfo("Exito!", "Usuario eliminado correctamente");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("user_removed"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -220,7 +220,7 @@ public class UsersBean implements Serializable {
 	public void sendEmail(String n_email){
 		if(!userRemPass.getEmail().equals(n_email)){
 			this.n_email="";
-			MsgUtil.msgError("Error!", "El correo no pertenece al usuario");			
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("mail_not_belong_user"));			
 			return;
 		}
 		
@@ -236,7 +236,7 @@ public class UsersBean implements Serializable {
 		    	EmailUtils.sendEmail(userRemPass.getEmail(),new_pass);
 		    } catch (MessagingException ex) {
 		    	ex.printStackTrace();
-		    	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al enviar recordatorio de contraseña!"));
+		    	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", LanguageBean.obtenerMensaje("error_sending_password_reminder")));
 		    }			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -270,7 +270,7 @@ public class UsersBean implements Serializable {
 	        int linea=1;
 	        
 	        if(conf.length<3 || conf.length>7){
-        		MsgUtil.msgError("Error!", "Numero invalido de columnas en archivo, linea "+linea+".");
+        		MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_number_columns_file")+linea+".");
         		br.close();
                 f.delete();
         		return;
@@ -297,7 +297,7 @@ public class UsersBean implements Serializable {
 	        if(user_type!=-1) c_c++;
 
         	if(c_c!=conf.length){
-        		MsgUtil.msgError("Error!", "Existen columnas de cabezera invalidas, linea "+linea+".");
+        		MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_header_columns")+linea+".");
         		br.close();
                 f.delete();
         		return;
@@ -311,7 +311,7 @@ public class UsersBean implements Serializable {
             	linea++;
 
             	if(linxlin.length!=conf.length){
-            		MsgUtil.msgError("Error!", "Numero invalido de columnas en archivo, linea "+linea+".");
+            		MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_number_columns_file")+linea+".");
             		br.close();
                     f.delete();
             		return;
@@ -321,7 +321,7 @@ public class UsersBean implements Serializable {
             	
             	if(user!=-1){
             		if(linxlin[user].isEmpty() || linxlin[user].equals("")){
-            			MsgUtil.msgError("Error!", "Nombre de usuario no valido, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_username")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");
                 		br.close();
                         f.delete();
                 		return;
@@ -329,7 +329,7 @@ public class UsersBean implements Serializable {
             		Users usr = usersService.getUserXUser(linxlin[user]);
             	
             		if(usr!=null){
-            			MsgUtil.msgError("Error!", "Nombre de usuario ya existe, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("username_already_exists")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");            			
                 		br.close();
                         f.delete();
                 		return;
@@ -338,7 +338,7 @@ public class UsersBean implements Serializable {
             	}            	
             	if(pass!=-1){
             		if(linxlin[pass].isEmpty() || linxlin[pass].equals("")){
-            			MsgUtil.msgError("Error!", "Contraseña no valida, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_password")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");            			
                 		br.close();
                         f.delete();
                 		return;
@@ -350,7 +350,7 @@ public class UsersBean implements Serializable {
             	if(email!=-1){            		
             		if(!linxlin[email].matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
-            			MsgUtil.msgError("Error!", "Email no valido, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_email")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");            			
                 		br.close();
                         f.delete();
                 		return;
@@ -360,19 +360,19 @@ public class UsersBean implements Serializable {
             	if(phone!=-1) userUM.setPhone(linxlin[phone]);            	
             	if(user_type!=-1) {
             		if(linxlin[user_type].isEmpty() || linxlin[user_type].equals("")){
-            			MsgUtil.msgError("Error!", "Tipo de usuario no valido, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_user_type")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");            			
                 		br.close();
                         f.delete();
                 		return;
             		}
             		if(!linxlin[user_type].matches("[0-9]+")){
-            			MsgUtil.msgError("Error!", "Un tipo de usuario es invalido, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_user_type")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");
                 		br.close();
                         f.delete();
                 		return;
             		}            		
             		if(Integer.parseInt(linxlin[user_type])<1 || Integer.parseInt(linxlin[user_type])>2){
-            			MsgUtil.msgError("Error!", "Un tipo de usuario es invalido, linea "+linea+".");
+            			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("invalid_user_type")+", "+LanguageBean.obtenerMensaje("line")+" "+linea+".");
                 		br.close();
                         f.delete();
                 		return;
@@ -391,13 +391,13 @@ public class UsersBean implements Serializable {
     			}  
 			}
             
-            MsgUtil.msgInfo("Exito!", "Usuarios guardados correctamente.");
+            MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("users_save"));
             
             br.close();
             f.delete();
             
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar guardar los usuarios.");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("error_save_data"));
 			e.printStackTrace();
 		}		
 	}
@@ -407,9 +407,9 @@ public class UsersBean implements Serializable {
 			for (Users eliminar : selectedUsers) {	
 				usersService.removeUser(eliminar);
 			}
-			MsgUtil.msgInfo("Exito!", "Registros eliminados correctamente.");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("users_removed"));
 		} catch (Exception e) {
-			MsgUtil.msgError("Error!", "Ocurrio un error al intentar eliminar los registros.");
+			MsgUtil.msgError(LanguageBean.obtenerMensaje("error"), LanguageBean.obtenerMensaje("error_remove_data"));
 			e.printStackTrace();
 		}		
 		selectedUsers=null;
@@ -492,7 +492,7 @@ public class UsersBean implements Serializable {
 			
 			this.n_pass=null;
 			
-			MsgUtil.msgInfo("Exito!", "Contraseña actualizada");
+			MsgUtil.msgInfo(LanguageBean.obtenerMensaje("success"), LanguageBean.obtenerMensaje("password_updated"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

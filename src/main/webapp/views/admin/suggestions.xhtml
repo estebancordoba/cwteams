@@ -6,33 +6,33 @@
                 template="/views/templates/admin/templateAdmin.xhtml">
                 
     <ui:define name="breadcrumb">
-    	<li>Sugerencias</li>
+    	<li>#{language.suggestions}</li>
     </ui:define>            
                 
     <ui:define name="content">
                 <p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" life="6000" escape="false" />
 
-				<p:panel id="pnl" header="Sugerencias">										
+				<p:panel id="pnl" header="#{language.suggestions}">										
 					
 					<h:form id="formSuggestions">
 						<p:dataTable id="tbl" value="#{ratingsBean.ratings}" var="q"
-									 emptyMessage="No hay sugerencias disponibles"
+									 emptyMessage="#{language.no_suggestions_availables}"
 									 widgetVar="tbl"
 									 rows="10" paginator="true" paginatorPosition="bottom"
 									 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									 rowsPerPageTemplate="5,10,15">
-						    <p:column headerText="Calificacion" filterBy="#{q.rating}" filterMatchMode="contains">
+						    <p:column headerText="#{language.qualification}" filterBy="#{q.rating}" filterMatchMode="contains">
 						        <p:rating readonly="true" value="#{q.rating}" />						        
 						    </p:column>
 						    
-						    <p:column headerText="Sugerencia">
+						    <p:column headerText="#{language.suggestion}">
 						        <h:outputText value="#{q.suggestion}" escape="false" />
 						    </p:column>
 						     
 						    <p:column style="width:15%;text-align: center">
 					            
-					            <p:commandButton update=":formSuggestions" actionListener="#{ratingsBean.eliminar(q.idRating)}" icon="ui-icon-trash" title="Eliminar">
-					            	<p:confirm header="Confirmación" message="Desea eliminar el registro?" icon="ui-icon-alert" />
+					            <p:commandButton update=":formSuggestions" actionListener="#{ratingsBean.eliminar(q.idRating)}" icon="ui-icon-trash" title="#{language.remove}">
+					            	<p:confirm header="#{language.confirmation}" message="#{language.delete_record}" icon="ui-icon-alert" />
 					            </p:commandButton>
 					            					                   
 					        </p:column>		
@@ -40,8 +40,8 @@
 												
 					</h:form>
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						<p:commandButton value="#{language.yes}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="#{language.no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
 				</p:panel>
 				

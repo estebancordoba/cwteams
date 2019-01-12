@@ -6,11 +6,11 @@
                 template="/views/templates/guest/templateGuest.xhtml">
     
     <ui:define name="breadcrumb">
-    	<li>Trabajo Colaborativo</li>
+    	<li>#{language.collaborative_work}</li>
         <li>/</li>
-    	<li><p:link outcome="formGroups">Conformar Grupos</p:link></li>   
+    	<li><p:link outcome="formGroups">#{language.groups_form}</p:link></li>   
     	<li>/</li>
-    	<li>Grupos Conformados</li>        
+    	<li>#{language.conformed_groups}</li>        
     </ui:define>
     
     <ui:define name="head"> 
@@ -27,51 +27,51 @@
 		    <p:graphicImage name="images/ajaxloadingbar.gif" />
 		</p:dialog> 
                                  
-		<p:panel id="pnl" header="Resultados Conformacion de Grupos">			
+		<p:panel id="pnl" header="#{language.results_conformation_groups}">			
 			<h:form id="formCollaborative">														         	
 					
 				<h:panelGrid columns="4" columnClasses="grid,grid,grid,grid">
 					<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
-                   		<h:outputText style="font-weight: bold;" value="Nombre: " />
+                   		<h:outputText style="font-weight: bold;" value="#{language.name}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.name}" styleClass="outputLabel"/>
                         
-                        <h:outputText style="font-weight: bold;" value="Descripcion:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.description}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.description}" styleClass="outputLabel"/>
                        	
-                       	<h:outputText style="font-weight: bold;" value="Dueño:" />
+                       	<h:outputText style="font-weight: bold;" value="#{language.owner}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.userOwner.name}" styleClass="outputLabel"/>
                    	</p:panelGrid>
 					
 					<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
-                   		<h:outputText style="font-weight: bold;" value="Tiempo Generacion: " />
+                   		<h:outputText style="font-weight: bold;" value="#{language.generation_time}: " />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.tiempoGeneracion} seg." styleClass="outputLabel"/>
                         
-                        <h:outputText style="font-weight: bold;" value="Numero de miembros por grupo:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.members_number_per_group}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numMembersxGroup}" styleClass="outputLabel"/>
                        	
-                       	<h:outputText style="font-weight: bold;" value="Numero de Individuos:" />
+                       	<h:outputText style="font-weight: bold;" value="#{language.individual_numbers}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numIndividuals}" styleClass="outputLabel"/>
                    	</p:panelGrid>
                    	
                    	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
-                   		<h:outputText style="font-weight: bold;" value="Numero de Caracteristicas:" />
+                   		<h:outputText style="font-weight: bold;" value="#{language.features_number}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numCaracteristicas}" styleClass="outputLabel"/>
                         
-                       	<h:outputText style="font-weight: bold;" value="Numero de Generaciones:" />
+                       	<h:outputText style="font-weight: bold;" value="#{language.generations_number}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.numGeneraciones}" styleClass="outputLabel"/>
                        	
-                        <h:outputText style="font-weight: bold;" value="Media de aptitud:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.fitness_average}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.mediaAptitud}" styleClass="outputLabel"/>			                        	
                    	</p:panelGrid>
                    	
                    	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="label,value">
-                   		<h:outputText style="font-weight: bold;" value="Porcentje de seleccion:" />
+                   		<h:outputText style="font-weight: bold;" value="#{language.selection_percentage}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.porcentajeSeleccion}%" styleClass="outputLabel"/>
                         
-                        <h:outputText style="font-weight: bold;" value="Probabilidad de mutacion de individuos:" />
+                        <h:outputText style="font-weight: bold;" value="#{language.probability_mutation_individuals}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.probabilidadMutarInd}%" styleClass="outputLabel"/>
                        	
-                       	<h:outputText style="font-weight: bold;" value="Probabilidad de mutacion de genes:" />
+                       	<h:outputText style="font-weight: bold;" value="#{language.probability_gene_mutation}:" />
                        	<h:outputText value="#{collaborativeBean.collaborativeActual.probabilidadMutarGen}%" styleClass="outputLabel"/>
                    	</p:panelGrid>
                    	
@@ -80,7 +80,7 @@
                    
                    		<canvas id="chart" onload="#{collaborativeBean.chartMedia()}" width="100%" height="100%"/>
 						
-						<p:commandButton value="Descargar Resultados" ajax="false" icon="ui-icon-document" actionListener="#{collaborativeBean.generarArchivoDownload(collaborativeBean.obtenerGrupos())}" 
+						<p:commandButton value="#{language.download_results}" ajax="false" icon="ui-icon-document" actionListener="#{collaborativeBean.generarArchivoDownload(collaborativeBean.obtenerGrupos())}" 
 						                 style="width:100%;height:100%;">
 					        <p:fileDownload value="#{collaborativeBean.fileDownload}" contentDisposition="attachment" />
 					    </p:commandButton>
@@ -91,10 +91,10 @@
 						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,15">
 				 
-				        <f:facet name="header" >Grupos</f:facet>
+				        <f:facet name="header" >#{language.groups}</f:facet>
 				 
 				        <p:panel>
-				        	<f:facet name="header"><center><b>Grupo #{gr.name}</b></center></f:facet>
+				        	<f:facet name="header"><center><b>#{language.group} #{gr.name}</b></center></f:facet>
 				        	<canvas id="chart#{gr.name}" onload="#{collaborativeBean.chartGroupLoad(gr.idGroupGa,gr.name)}" width="100%" height="100%"/>				        						
 				        </p:panel>
 				 
@@ -102,8 +102,8 @@
 			</h:form>
 					
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="#{language.yes}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="#{language.no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</p:panel>
     </ui:define>

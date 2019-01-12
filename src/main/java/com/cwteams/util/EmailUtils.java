@@ -18,6 +18,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 
+import com.cwteams.beans.LanguageBean;
+
 public class EmailUtils{
 	public static void sendEmail(String destination, String new_pass) throws MessagingException{
         
@@ -67,10 +69,10 @@ public class EmailUtils{
 
         message.setFrom(new InternetAddress(email));
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
-		message.setSubject("Recuperacion de Contraseña");
-        message.setText("Nueva Contraseña: "+new_pass);
+		message.setSubject(LanguageBean.obtenerMensaje("password_recovery"));
+        message.setText(LanguageBean.obtenerMensaje("new_password")+": "+new_pass);
             
         Transport.send(message);   
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Recordatorio de contraseña enviado a " + destination + "!"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, LanguageBean.obtenerMensaje("information"), LanguageBean.obtenerMensaje("password_reminder_sent_to")+" " + destination + "!"));
     }  
 }
