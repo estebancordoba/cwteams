@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+ 	
+	<context:property-placeholder location="settings/Settings-test.properties"/>
+
+	<bean id="DataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">		
+		<property name="driverClassName" value="${driverDB}" />
+		<property name="url" value="jdbc:${typeDB}://${ipDB}:${portDB}/${nameDB}" />
+		<property name="username" value="${userDB}" />
+		<property name="password" value="${passwordDB}" />
+	</bean>
+
+	<bean id="defaulLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="DataSource" />
+
+		<property name="configLocations">
+			<list>
+				<value>/settings/hibernate-test.cfg.xml</value>
+			</list>
+		</property>
+	</bean>	
+	
+ 	<bean id="UsersBean" class="com.cwteams.service.UsersServiceImpl">
+		<property name="usersDAO" ref="usersDAO" />
+	</bean>
+
+	<bean id="usersDAO" class="com.cwteams.model.dao.UsersDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+ 
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>
