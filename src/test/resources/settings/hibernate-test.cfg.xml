@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+        <!-- SQL dialect, only thing required for Spring. 
+        For stanalone application, other DB configs are required -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        
+        <!-- Mapas de los pojos -->
+        <mapping resource="/com/cwteams/model/hibernate/UsersType.hbm.xml" />
+		<mapping resource="/com/cwteams/model/hibernate/Users.hbm.xml" />
+		<mapping resource="/com/cwteams/model/hibernate/Ratings.hbm.xml" />		
+		<mapping resource="/com/cwteams/model/hibernate/CharacteristicsGa.hbm.xml" />
+		<mapping resource="/com/cwteams/model/hibernate/GroupsGa.hbm.xml" />
+		<mapping resource="/com/cwteams/model/hibernate/MembersGa.hbm.xml" />
+		<mapping resource="/com/cwteams/model/hibernate/CollaborativeGa.hbm.xml" />
+		
+		<!-- /Mapas de los pojos -->	
+    </session-factory>
+
+</hibernate-configuration>

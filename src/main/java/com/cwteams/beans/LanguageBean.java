@@ -55,9 +55,9 @@ public class LanguageBean implements Serializable {
 		}
 	}
 	
-	public static String obtenerMensaje(String name){		
+	public static String obtenerMensaje(String name){
 		String message = archivoProperties.getProperty(name);
-		if(message == null) message=name;
+		if(message == null) return name;			
 		return message;
 	}
 }
