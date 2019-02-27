@@ -38,7 +38,23 @@
 	<bean id="usersDAO" class="com.cwteams.model.dao.UsersDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
- 
+	
+	<bean id="RatingsServiceBean" class="com.cwteams.service.RatingsServiceImpl">
+		<property name="ratingsDAO" ref="ratingsDAO" />
+	</bean>
+
+	<bean id="ratingsDAO" class="com.cwteams.model.dao.RatingsDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="CollaborativeServiceBean" class="com.cwteams.service.CollaborativeServiceImpl">
+		<property name="collaborativeDAO" ref="collaborativeDAO" />
+	</bean>
+
+	<bean id="collaborativeDAO" class="com.cwteams.model.dao.CollaborativeDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+		 
 	<tx:annotation-driven transaction-manager="txManager" />
 
 	<bean id="txManager"

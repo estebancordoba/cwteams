@@ -6,14 +6,16 @@ import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 import org.junit.runners.Suite;
 
-import com.cwteams.test.general.AllGeneralTests;
-import com.cwteams.test.ui.AllUITests;
+import com.cwteams.test.integration.TestDAO;
+import com.cwteams.test.ui.TestUI;
+import com.cwteams.test.unit.TestGA;
 
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
-   AllUITests.class,
-   AllGeneralTests.class,
+   TestGA.class,
+   TestDAO.class,
+   TestUI.class,
 })
 
 public class AllTests {    
