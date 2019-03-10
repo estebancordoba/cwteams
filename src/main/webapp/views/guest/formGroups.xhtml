@@ -4,6 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 template="/views/templates/guest/templateGuest.xhtml">
     
     <ui:define name="breadcrumb">
@@ -65,8 +66,14 @@
 							<p:lightBox iframe="true" id="lighbox2"> 
 							    <p:commandButton value="#{language.text_file_format}" icon="ui-icon-insert-drive-file" />
 							 
-							    <f:facet name="inline">
-							         <p:graphicImage name="images/format.png" value="#{language.text_file_format}" width="100%"/>
+							    <f:facet name="inline">									 
+									 <c:if test="#{languageBean.language eq 'es'}">
+										<p:graphicImage name="images/format_es.png" value="#{language.text_file_format}" width="100%"/>									 
+									 </c:if>
+									 <c:if test="#{languageBean.language eq 'en'}">
+										<p:graphicImage name="images/format_en.png" value="#{language.text_file_format}" width="100%"/>									 
+									 </c:if>
+									 <!-- <p:graphicImage name="#{languageBean.language eq 'es' ? 'images/format_es.png' : 'images/format_en.png'}" value="#{language.text_file_format}" width="100%"/> -->									 									 
 							    </f:facet>
 							</p:lightBox>							
 							<br/>

@@ -3,7 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
+				xmlns:pe="http://primefaces.org/ui/extensions"
+				xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 template="/views/templates/admin/templateAdmin.xhtml">
     
     <ui:define name="breadcrumb">
@@ -111,6 +112,23 @@
 				<h:form id="formParametros" enctype="multipart/form-data">
 					<p:wizard id="wizardPar" widgetVar="wizardPar" flowListener="#{collaborativeBean.onFlowProcess}" nextLabel="#{language.next}" backLabel="#{language.previous}" >
 						<p:tab id="submitdata" title="#{language.upload_file}">
+
+							<br/>
+							<p:lightBox iframe="true" id="lighbox2"> 
+								<p:commandButton value="#{language.text_file_format}" icon="ui-icon-insert-drive-file" />
+								
+								<f:facet name="inline">									 
+										<c:if test="#{languageBean.language eq 'es'}">
+										<p:graphicImage name="images/format_es.png" value="#{language.text_file_format}" width="100%"/>									 
+										</c:if>
+										<c:if test="#{languageBean.language eq 'en'}">
+										<p:graphicImage name="images/format_en.png" value="#{language.text_file_format}" width="100%"/>									 
+										</c:if>
+										<!-- <p:graphicImage name="#{languageBean.language eq 'es' ? 'images/format_es.png' : 'images/format_en.png'}" value="#{language.text_file_format}" width="100%"/> -->									 									 
+								</f:facet>
+							</p:lightBox>							
+							<br/>
+
 				        	<p:panelGrid columns="1" layout="grid" styleClass="form-group">	  		                                		                               		
 				                <p:fileUpload id="fileCW" fileUploadListener="#{collaborativeBean.submitData}" mode="advanced" dragDropSupport="true"
           							sizeLimit="100000" fileLimit="1" 
