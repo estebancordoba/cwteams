@@ -8,7 +8,7 @@
 
     <div class="layout-topbar">
     	<p:growl id="growlMsgs" sticky="true" showDetail="true" life="3000" />
-    	<p:dialog widgetVar="dlgFirst" visible="#{usersBean.obtenerUsuarioFirst(usersBean.obtenerUsuario().idUser)}" header="#{language.please_change_password}" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
+    	<p:dialog widgetVar="dlgFirst" visible="#{usersBean.obtenerUsuarioFirst(usersBean.obtenerUsuario().idUser)}" header="#{language.please_change_password}" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false" class="max-w-sm">
 			<h:form>	    			
    				<p:panelGrid id="matchGrid" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
 															

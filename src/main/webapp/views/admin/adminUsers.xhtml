@@ -69,7 +69,7 @@
 							<p:confirm header="#{language.confirmation}" message="#{language.delete_records}" icon="ui-icon-alert" />
 						</p:commandButton>
 						
-						<p:dialog widgetVar="dlgAgregar" onHide="PF('dlgAgregar').content.empty()" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+						<p:dialog widgetVar="dlgAgregar" onHide="PF('dlgAgregar').content.empty()" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" class="max-w-sm">
 							<p:ajax event="close" update=":formUsers:dialogA" listener="#{usersBean.cancelar()}" />
 							<h:form>
 							<p:tabView id="tabA">								
@@ -157,7 +157,7 @@
 					    </p:dialog>			
 					</h:form>
 					
-					<p:dialog widgetVar="dlgMultipleUsers" onHide="PF('dlgMultipleUsers').content.empty()" closeOnEscape="true" id="dialogMU" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="#{language.upload_csv}">							
+					<p:dialog widgetVar="dlgMultipleUsers" onHide="PF('dlgMultipleUsers').content.empty()" closeOnEscape="true" id="dialogMU" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="#{language.upload_csv}" class="max-w-sm">							
 						<p:ajax event="close" resetValues="true" />
 						<h:form enctype="multipart/form-data">
 							<p:fileUpload id="fileMU" fileUploadListener="#{usersBean.submitMultipleUsers}" mode="advanced" dragDropSupport="true"
