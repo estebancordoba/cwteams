@@ -12,7 +12,7 @@
     <ui:define name="content">              	
     			<p:growl id="growl" sticky="true" showDetail="true" showSummary="true" autoUpdate="true" life="3000" escape="false" />
     			
-    			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" class="max-w-xs">
 				    <p:graphicImage name="images/ajaxloadingbar.gif" />
 				</p:dialog>
 
@@ -63,7 +63,7 @@
 					</h:form>
 					
 					<h:form id="formBackup">
-		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.perform_backup}" widgetVar="dlgBackup" resizable="false" focus="cbCancel" 
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.perform_backup}" widgetVar="dlgBackup" resizable="false" focus="cbCancel" class="max-w-sm"
 		                          onHide="PF('dlgBackup').content.empty()">
 		                          		                    
 		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">                        
@@ -80,7 +80,7 @@
 		            </h:form>        
 		            
 		            <h:form id="formRestore">
-		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.restore_backup}" widgetVar="dlgRestore" resizable="false" focus="cbCancel" 
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.restore_backup}" widgetVar="dlgRestore" resizable="false" focus="cbCancel" class="max-w-sm"
 		                          onHide="PF('dlgResore').content.empty()">		                    
 		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">
 		                        <h:outputText value="#{language.sure_restore_backup}&lt;br&gt;&lt;b&gt;#{backupBean.backupFile.name}&lt;/b&gt;?" 
@@ -96,7 +96,7 @@
 		            </h:form>
 		            
 		            <h:form id="formEliminar">
-		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.remove_backup}" widgetVar="dlgEliminar" resizable="false" 
+		                <p:dialog modal="true" showEffect="fade" hideEffect="fade" header="#{language.remove_backup}" widgetVar="dlgEliminar" resizable="false" class="max-w-sm"
 		                          focus="cbCancel" onHide="PF('dlgEliminar').content.empty()">
 		                    <p:growl id="growlEliminar" showSummary="true" showDetail="true" life="2000"/>		                    
 		                    <h:panelGrid columns="2" cellpadding="4" style="margin: 0 auto; text-align:center">                        
@@ -113,7 +113,7 @@
 					
 				</p:panel>	
 				
-				<p:dialog widgetVar="dlgSubmitBK" onHide="PF('dlgSubmitBK').content.empty()" closeOnEscape="true" id="dialogBK" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="#{language.upload_csv}">							
+				<p:dialog widgetVar="dlgSubmitBK" onHide="PF('dlgSubmitBK').content.empty()" closeOnEscape="true" id="dialogBK" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="#{language.upload_csv}" class="max-w-sm">							
 						<p:ajax event="close" resetValues="true" />
 						<h:form enctype="multipart/form-data">
 							<p:fileUpload id="fileBK" fileUploadListener="#{backupBean.submitBK}" mode="advanced" dragDropSupport="true"

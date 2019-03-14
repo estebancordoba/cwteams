@@ -57,7 +57,7 @@
         	</div>
    		</div>
    		
-   						<p:dialog widgetVar="dlgAgregar" onHide="PF('dlgAgregar').content.empty()" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+   						<p:dialog widgetVar="dlgAgregar" onHide="PF('dlgAgregar').content.empty()" closeOnEscape="true" id="dialogA" responsive="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" class="max-w-sm">
 							<p:ajax event="close" update=":formUser:dialogA" listener="#{usersBean.cancelar()}" />
 							<h:form>
 							<p:tabView id="tabA">								

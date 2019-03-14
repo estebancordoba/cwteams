@@ -9,11 +9,11 @@
     <div class="layout-topbar">
     	<p:growl id="growlMsgs" showDetail="true" life="2000" />
     	
-    	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" class="max-w-xs">
 		    <p:graphicImage name="images/ajaxloadingbar.gif" />
 		</p:dialog>
     	
-		<p:dialog widgetVar="dlgAbout" header="#{language.about} #{language.cw_teams}" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">    		
+		<p:dialog widgetVar="dlgAbout" header="#{language.about} #{language.cw_teams}" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true" class="max-w-sm">    		
        		<p:graphicImage name="images/logo-colored.png" library="serenity-layout" width="155" height="50" style="display:block;margin:0 auto 0 auto;"/>
        		
        		<div class="ui-g dashboard">  
@@ -59,7 +59,7 @@
        		</p:panelGrid>       		
        	</p:dialog>
     	
-    	<p:dialog header="#{language.suggestions}" id="dialogS" widgetVar="dlgSug" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="50%">
+    	<p:dialog header="#{language.suggestions}" id="dialogS" widgetVar="dlgSug" modal="true" showEffect="fade" hideEffect="fade" resizable="false" class="max-w-md">
 			<p:ajax event="close" update=":dialogS" listener="#{ratingsBean.cancelar()}"/>
 			<h:form>	
 				<p:outputPanel id="panelA">			
@@ -102,7 +102,7 @@
     		</p:dialog>
     	
     	<h:form id="pgLogin">
-		    <p:dialog header="#{language.login}" responsive="true" widgetVar="dlg" resizable="false" modal="true">
+		    <p:dialog header="#{language.login}" responsive="true" widgetVar="dlg" resizable="false" modal="true" class="max-w-xs">
 		    	<p:focus id="focus" context="pgLogin"/>		    		
 		        	<p:panelGrid columns="1" styleClass="form-group ui-panelgrid-blank" layout="grid">
 		        		
@@ -130,7 +130,7 @@
 		    </p:dialog>
 		</h:form>
 		
-		<p:dialog widgetVar="dlgReminderPass" closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+		<p:dialog widgetVar="dlgReminderPass" closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true" class="max-w-xs">
 			<p:ajax event="close" listener="#{usersBean.cancelar()}" update=":formReminderPass" resetValues="true" />
 			<h:form id="formReminderPass">			    
 	            <p:panelGrid columns="1" id="pReminder" layout="grid" styleClass="ui-panelgrid-blank form-group">				            
